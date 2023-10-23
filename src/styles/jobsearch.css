@@ -1,0 +1,55 @@
+.jobsearch-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.jobsearch-input-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0 5px;
+  margin: 5px;
+}
+
+.jobsearch-label {
+  font-size: 1.1em;
+  font-weight: normal;
+  margin: 3px;
+}
+
+.jobsearch-input {
+  flex: 1 0 200px;
+}
+
+.jobsearch-container button {
+  height: 39px;
+  margin: 10px;
+}
+
+.jobsearch-filters-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.jobsearch-filters-container select {
+  width: fit-content;
+  background-color: #e3e2e2;
+  font-size: 14px;
+  padding: 5px;
+  margin: 20px 5px 3px;
+}
+
+.filter-select {
+  font-size: 12px;
+  margin: 5px;
+}
+
+.no-search-results-container {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}

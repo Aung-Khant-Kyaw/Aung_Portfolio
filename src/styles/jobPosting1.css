@@ -1,0 +1,146 @@
+.jp-container {
+  color: #2c423f;
+  display: flex;
+  padding: auto;
+  margin: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+}
+.jp-wrapper,
+.jp2-wrapper,
+.jp3-wrapper {
+  overflow-y: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.jp-body-wrapper {
+  line-height: 2rem;
+  border-top: 1px solid;
+}
+
+.jp-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.jp-headline {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.jp-guide {
+  font-size: medium;
+  font-style: italic;
+}
+
+
+.jp-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.jp-value,
+.jp-state-value {
+  width: 500px;
+  border-width: 1px;
+}
+
+.jp-state-value {
+  margin-top: -10px;
+}
+
+
+
+.jp-next-btn,
+.jp2-next-btn {
+  margin-left: 10px;
+  padding: 7px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.jp-next-btn:hover,
+.jp2-next-btn:hover,
+.jp-submit:hover {
+  cursor: pointer;
+  background-color: #5988a7;
+  color: #fff;
+}
+
+.jp-duration {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.error-message {
+  color: red;
+}
+
+.toggle-button {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.toggle-button.on {
+  background-color: #4CAF50;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.toggle-button.on .toggle-slider {
+  transform: translateX(20px);
+}
+.jp-btn-wrapper,
+.jp2-btn-wrapper,
+.jp3-btn-wrapper  {
+  margin-bottom: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
+
+.jp-submit {
+  font-weight: bold;
+  border-radius: 15px;
+  text-align: center;
+  width: 120px;
+  padding: 5px;
+  background-color: #26506c;
+  color: #fff;
+  cursor: pointer;
+}

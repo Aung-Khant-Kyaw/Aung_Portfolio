@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)http://127.0.0.1:5500/listing_info.html#6706149c-d886-4cb8-a575-5f963579bf12 -->
+<html lang="en"=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style>
+    <script src="./Jobs4Intern_files/react.development.js" crossorigin=""></script>
+    <script src="./Jobs4Intern_files/react-dom.development.js" crossorigin=""></script>
+    <script src="./Jobs4Intern_files/babel.min.js"></script>
+    <script src="./Jobs4Intern_files/showdown.min.js"></script>
+    <script type="text/javascript" src="./Jobs4Intern_files/sample_listings.json"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    
+    
+    
+    
+    
+    <script src="./Jobs4Intern_files/ionicons.js"></script><script src="./Jobs4Intern_files/ionicons.dkb1z4hj.js" type="module" crossorigin="true" data-resources-url="https://unpkg.com/ionicons@4.5.5/dist/ionicons/" data-namespace="ionicons"></script>
+    
+
+    
+
+    <title>Jobs4Intern</title>
+<script>'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function readTextFile(file) {
+    var rawFile = new XMLHttpRequest();
+    var allText = '';
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                allText = rawFile.responseText;
+            }
+        }
+    };
+    rawFile.send(null);
+    return allText;
+}
+
+function merge_elements(element_list) {
+    var _React;
+
+    return (_React = React).createElement.apply(_React, [React.Fragment, null].concat(_toConsumableArray(element_list)));
+}
+
+var ListingInfo = function (_React$Component) {
+    _inherits(ListingInfo, _React$Component);
+
+    function ListingInfo() {
+        _classCallCheck(this, ListingInfo);
+
+        return _possibleConstructorReturn(this, (ListingInfo.__proto__ || Object.getPrototypeOf(ListingInfo)).apply(this, arguments));
+    }
+
+    _createClass(ListingInfo, [{
+        key: 'render',
+        value: function render() {
+            var element_list = [];
+
+            var listing_hash = document.location.hash.substr(1, document.location.hash.length);
+            var listing_info = JSON.parse(readTextFile("/resources/data/sample_listings/" + listing_hash + "/info.json"));
+            var listing_desc_md = readTextFile("/resources/data/sample_listings/" + listing_hash + "/role_desc.md");
+            var converter = new showdown.Converter();
+            var listing_desc_html = converter.makeHtml(listing_desc_md);
+
+            element_list.push(React.createElement(
+                'div',
+                { className: 'col span-1-of-2' },
+                React.createElement(
+                    'div',
+                    { className: 'role_header' },
+                    React.createElement(
+                        'h1',
+                        { className: 'company_title' },
+                        listing_info.company
+                    )
+                )
+            ));
+
+            element_list.push(React.createElement(
+                'div',
+                { className: 'col span-1-of-2' },
+                React.createElement(
+                    'div',
+                    { className: 'role_markdown' },
+                    React.createElement(
+                        'h1',
+                        { className: 'markdown_header' },
+                        ' ',
+                        listing_info.role,
+                        ' '
+                    ),
+                    React.createElement('div', { className: 'role_md', dangerouslySetInnerHTML: { __html: listing_desc_html } })
+                )
+            ));
+
+            return element_list;
+        }
+    }]);
+
+    return ListingInfo;
+}(React.Component);
+
+var domContainer = document.querySelector('#listing_info_react_root');
+ReactDOM.render(React.createElement(ListingInfo), domContainer);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxpc3RpbmdfaW5mb19yZWFjdC5qcyJdLCJuYW1lcyI6WyJyZWFkVGV4dEZpbGUiLCJmaWxlIiwicmF3RmlsZSIsIlhNTEh0dHBSZXF1ZXN0IiwiYWxsVGV4dCIsIm9wZW4iLCJvbnJlYWR5c3RhdGVjaGFuZ2UiLCJyZWFkeVN0YXRlIiwic3RhdHVzIiwicmVzcG9uc2VUZXh0Iiwic2VuZCIsIm1lcmdlX2VsZW1lbnRzIiwiZWxlbWVudF9saXN0IiwiY3JlYXRlRWxlbWVudCIsIlJlYWN0IiwiRnJhZ21lbnQiLCJMaXN0aW5nSW5mbyIsImxpc3RpbmdfaGFzaCIsImRvY3VtZW50IiwibG9jYXRpb24iLCJoYXNoIiwic3Vic3RyIiwibGVuZ3RoIiwibGlzdGluZ19pbmZvIiwiSlNPTiIsInBhcnNlIiwibGlzdGluZ19kZXNjX21kIiwiY29udmVydGVyIiwic2hvd2Rvd24iLCJDb252ZXJ0ZXIiLCJsaXN0aW5nX2Rlc2NfaHRtbCIsIm1ha2VIdG1sIiwicHVzaCIsImNvbXBhbnkiLCJyb2xlIiwiX19odG1sIiwiQ29tcG9uZW50IiwiZG9tQ29udGFpbmVyIiwicXVlcnlTZWxlY3RvciIsIlJlYWN0RE9NIiwicmVuZGVyIl0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7O0FBRUEsU0FBU0EsWUFBVCxDQUFzQkMsSUFBdEIsRUFDQTtBQUNJLFFBQUlDLFVBQVUsSUFBSUMsY0FBSixFQUFkO0FBQ0EsUUFBSUMsVUFBVSxFQUFkO0FBQ0FGLFlBQVFHLElBQVIsQ0FBYSxLQUFiLEVBQW9CSixJQUFwQixFQUEwQixLQUExQjtBQUNBQyxZQUFRSSxrQkFBUixHQUE2QixZQUM3QjtBQUNJLFlBQUdKLFFBQVFLLFVBQVIsS0FBdUIsQ0FBMUIsRUFDQTtBQUNJLGdCQUFHTCxRQUFRTSxNQUFSLEtBQW1CLEdBQW5CLElBQTBCTixRQUFRTSxNQUFSLElBQWtCLENBQS9DLEVBQ0E7QUFDSUosMEJBQVVGLFFBQVFPLFlBQWxCO0FBQ0g7QUFDSjtBQUNKLEtBVEQ7QUFVQVAsWUFBUVEsSUFBUixDQUFhLElBQWI7QUFDQSxXQUFPTixPQUFQO0FBQ0g7O0FBRUQsU0FBU08sY0FBVCxDQUF5QkMsWUFBekIsRUFDQTtBQUFBOztBQUNJLFdBQU8saUJBQU1DLGFBQU4sZ0JBQW9CQyxNQUFNQyxRQUExQixFQUFvQyxJQUFwQyw0QkFBNkNILFlBQTdDLEdBQVA7QUFDSDs7SUFFS0ksVzs7Ozs7Ozs7Ozs7aUNBQ087QUFDTCxnQkFBSUosZUFBZSxFQUFuQjs7QUFFQSxnQkFBSUssZUFBZUMsU0FBU0MsUUFBVCxDQUFrQkMsSUFBbEIsQ0FBdUJDLE1BQXZCLENBQThCLENBQTlCLEVBQWlDSCxTQUFTQyxRQUFULENBQWtCQyxJQUFsQixDQUF1QkUsTUFBeEQsQ0FBbkI7QUFDQSxnQkFBSUMsZUFBZUMsS0FBS0MsS0FBTCxDQUFXekIsYUFBYSxxQ0FBbUNpQixZQUFuQyxHQUFnRCxZQUE3RCxDQUFYLENBQW5CO0FBQ0EsZ0JBQUlTLGtCQUFrQjFCLGFBQWEscUNBQW1DaUIsWUFBbkMsR0FBZ0QsZUFBN0QsQ0FBdEI7QUFDQSxnQkFBSVUsWUFBWSxJQUFJQyxTQUFTQyxTQUFiLEVBQWhCO0FBQ0EsZ0JBQUlDLG9CQUFvQkgsVUFBVUksUUFBVixDQUFtQkwsZUFBbkIsQ0FBeEI7O0FBRUFkLHlCQUFhb0IsSUFBYixDQUNJO0FBQUE7QUFBQSxrQkFBSyxXQUFVLGlCQUFmO0FBQ0k7QUFBQTtBQUFBLHNCQUFLLFdBQVUsYUFBZjtBQUNJO0FBQUE7QUFBQSwwQkFBSSxXQUFVLGVBQWQ7QUFBK0JULHFDQUFhVTtBQUE1QztBQURKO0FBREosYUFESjs7QUFRQXJCLHlCQUFhb0IsSUFBYixDQUNJO0FBQUE7QUFBQSxrQkFBSyxXQUFVLGlCQUFmO0FBQ0k7QUFBQTtBQUFBLHNCQUFLLFdBQVUsZUFBZjtBQUNJO0FBQUE7QUFBQSwwQkFBSSxXQUFVLGlCQUFkO0FBQUE7QUFBa0NULHFDQUFhVyxJQUEvQztBQUFBO0FBQUEscUJBREo7QUFFSSxpREFBSyxXQUFVLFNBQWYsRUFBeUIseUJBQXlCLEVBQUNDLFFBQU9MLGlCQUFSLEVBQWxEO0FBRko7QUFESixhQURKOztBQVNBLG1CQUFPbEIsWUFBUDtBQUNIOzs7O0VBNUJxQkUsTUFBTXNCLFM7O0FBK0JoQyxJQUFNQyxlQUFlbkIsU0FBU29CLGFBQVQsQ0FBdUIsMEJBQXZCLENBQXJCO0FBQ0FDLFNBQVNDLE1BQVQsQ0FBZ0IxQixNQUFNRCxhQUFOLENBQW9CRyxXQUFwQixDQUFoQixFQUFrRHFCLFlBQWxEIiwiZmlsZSI6Imxpc3RpbmdfaW5mb19yZWFjdC5qcyIsInNvdXJjZXNDb250ZW50IjpbIid1c2Ugc3RyaWN0JztcblxuZnVuY3Rpb24gcmVhZFRleHRGaWxlKGZpbGUpXG57XG4gICAgbGV0IHJhd0ZpbGUgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTtcbiAgICBsZXQgYWxsVGV4dCA9ICcnO1xuICAgIHJhd0ZpbGUub3BlbihcIkdFVFwiLCBmaWxlLCBmYWxzZSk7XG4gICAgcmF3RmlsZS5vbnJlYWR5c3RhdGVjaGFuZ2UgPSBmdW5jdGlvbiAoKVxuICAgIHtcbiAgICAgICAgaWYocmF3RmlsZS5yZWFkeVN0YXRlID09PSA0KVxuICAgICAgICB7XG4gICAgICAgICAgICBpZihyYXdGaWxlLnN0YXR1cyA9PT0gMjAwIHx8IHJhd0ZpbGUuc3RhdHVzID09IDApXG4gICAgICAgICAgICB7XG4gICAgICAgICAgICAgICAgYWxsVGV4dCA9IHJhd0ZpbGUucmVzcG9uc2VUZXh0O1xuICAgICAgICAgICAgfVxuICAgICAgICB9XG4gICAgfVxuICAgIHJhd0ZpbGUuc2VuZChudWxsKTtcbiAgICByZXR1cm4gYWxsVGV4dDtcbn1cblxuZnVuY3Rpb24gbWVyZ2VfZWxlbWVudHMoIGVsZW1lbnRfbGlzdCApXG57XG4gICAgcmV0dXJuIFJlYWN0LmNyZWF0ZUVsZW1lbnQoUmVhY3QuRnJhZ21lbnQsIG51bGwsIC4uLmVsZW1lbnRfbGlzdCk7XG59XG5cbmNsYXNzIExpc3RpbmdJbmZvIGV4dGVuZHMgUmVhY3QuQ29tcG9uZW50IHtcbiAgICByZW5kZXIoKSB7XG4gICAgICAgIGxldCBlbGVtZW50X2xpc3QgPSBbXTtcblxuICAgICAgICBsZXQgbGlzdGluZ19oYXNoID0gZG9jdW1lbnQubG9jYXRpb24uaGFzaC5zdWJzdHIoMSwgZG9jdW1lbnQubG9jYXRpb24uaGFzaC5sZW5ndGgpO1xuICAgICAgICBsZXQgbGlzdGluZ19pbmZvID0gSlNPTi5wYXJzZShyZWFkVGV4dEZpbGUoXCIvcmVzb3VyY2VzL2RhdGEvc2FtcGxlX2xpc3RpbmdzL1wiK2xpc3RpbmdfaGFzaCtcIi9pbmZvLmpzb25cIikpO1xuICAgICAgICBsZXQgbGlzdGluZ19kZXNjX21kID0gcmVhZFRleHRGaWxlKFwiL3Jlc291cmNlcy9kYXRhL3NhbXBsZV9saXN0aW5ncy9cIitsaXN0aW5nX2hhc2grXCIvcm9sZV9kZXNjLm1kXCIpO1xuICAgICAgICBsZXQgY29udmVydGVyID0gbmV3IHNob3dkb3duLkNvbnZlcnRlcigpO1xuICAgICAgICBsZXQgbGlzdGluZ19kZXNjX2h0bWwgPSBjb252ZXJ0ZXIubWFrZUh0bWwobGlzdGluZ19kZXNjX21kKTtcblxuICAgICAgICBlbGVtZW50X2xpc3QucHVzaChcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY29sIHNwYW4tMS1vZi0yXCI+XG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJyb2xlX2hlYWRlclwiPlxuICAgICAgICAgICAgICAgICAgICA8aDEgY2xhc3NOYW1lPVwiY29tcGFueV90aXRsZVwiPntsaXN0aW5nX2luZm8uY29tcGFueX08L2gxPlxuICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICk7XG5cbiAgICAgICAgZWxlbWVudF9saXN0LnB1c2goXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNvbCBzcGFuLTEtb2YtMlwiPlxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicm9sZV9tYXJrZG93blwiPlxuICAgICAgICAgICAgICAgICAgICA8aDEgY2xhc3NOYW1lPVwibWFya2Rvd25faGVhZGVyXCI+IHtsaXN0aW5nX2luZm8ucm9sZX0gPC9oMT5cbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJyb2xlX21kXCIgZGFuZ2Vyb3VzbHlTZXRJbm5lckhUTUw9e3tfX2h0bWw6bGlzdGluZ19kZXNjX2h0bWx9fS8+XG4gICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgKTtcbiAgICAgICAgXG4gICAgICAgIHJldHVybiBlbGVtZW50X2xpc3Q7XG4gICAgfVxufVxuXG5jb25zdCBkb21Db250YWluZXIgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCcjbGlzdGluZ19pbmZvX3JlYWN0X3Jvb3QnKTtcblJlYWN0RE9NLnJlbmRlcihSZWFjdC5jcmVhdGVFbGVtZW50KExpc3RpbmdJbmZvKSwgZG9tQ29udGFpbmVyKTtcbiJdfQ==</script><template></template><link rel="stylesheet" type="text/css" href="./Jobs4Intern_files/normalize.css"><link rel="stylesheet" type="text/css" href="./Jobs4Intern_files/grid.css"><link rel="stylesheet" type="text/css" href="./Jobs4Intern_files/style.css"><link rel="stylesheet" type="text/css" href="./Jobs4Intern_files/queries.css"><link rel="stylesheet" type="text/css" href="./Jobs4Intern_files/ionicons.min.css"><link href="./Jobs4Intern_files/css" rel="stylesheet"><link href="./Jobs4Intern_files/ionicons.min(1).css" rel="stylesheet"><link rel="stylesheet" href="./Jobs4Intern_files/font-awesome.min.css"></head>
+
+<body data-__gyazo-extension-added-paste-support="true">
+
+    <header class="header_listing">
+        <nav>
+            <div class="row">
+                <img src="./Jobs4Intern_files/rtilogo.png" alt="J4I Logo" class="logo">
+                <ul class="main-nav">
+                    <li><a href="http://127.0.0.1:5500/index.html">Home</a></li>
+                    <li><a href="http://127.0.0.1:5500/jobslisting.html">Jobs Listing</a></li>
+                    <li><a href="http://127.0.0.1:5500/about.html">About</a></li>
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">Messages</a></li>
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">Login/Sign up</a></li>
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">Notifications</a></li>
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">User</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="listing_info_react_root"><div class="col span-1-of-2"><div class="role_header"><h1 class="company_title">Sample Company 1</h1></div></div><div class="col span-1-of-2"><div class="role_markdown"><h1 class="markdown_header"> Role 1 </h1><div class="role_md"><h1 id="samplejob">SAMPLE-JOB</h1>
+<p>This job is cool and <strong>great</strong> and <em>fun</em></p>
+<p>Reasons Why</p>
+<ul>
+<li>Reason 1</li>
+<li>Reason 2</li>
+<li>Reason 3</li>
+</ul></div></div></div></div>
+        <script type="text/babel" src="./Jobs4Intern_files/listing_info_react.js"></script>
+        <!------
+        <div class="row">
+            <div class="col span-1-of-2 box">
+                <h3>Up to 365 days/year</h3>
+                <p>
+                </p>
+            </div>
+            <div class="col span-1-of-2 box">
+                <h3>Ready in 20 minutes</h3>
+                <p>
+                </p>
+            </div>
+------------->
+    </header>
+
+
+    <footer>
+        <div class="row">
+                <div class="col span-1-of-2">
+                    <ul class="footer-nav">
+                        <li><a href="http://127.0.0.1:5500/listing_info.html#">About us</a></li>
+                        <li><a href="http://127.0.0.1:5500/listing_info.html#">Blog</a></li>
+                        <li><a href="http://127.0.0.1:5500/listing_info.html#">Press</a></li>
+                        <li><a href="http://127.0.0.1:5500/listing_info.html#">iOS App</a></li>
+                        <li><a href="http://127.0.0.1:5500/listing_info.html#">Android App</a></li>
+                    </ul>
+                </div>
+                <div class="col span-1-of-2">
+                    <ul class="social-links">
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">
+                            <ion-icon name="logo-facebook" class="facebook hydrated" role="img" aria-label="logo facebook"></ion-icon>
+                        </a></li>
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">
+                            <ion-icon name="logo-twitter" class="twitter hydrated" role="img" aria-label="logo twitter"></ion-icon>
+                        </a></li>
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">
+                            <ion-icon name="logo-googleplus" class="google hydrated" role="img" aria-label="logo googleplus"></ion-icon>
+                        </a></li>
+                    <li><a href="http://127.0.0.1:5500/listing_info.html#">
+                            <ion-icon name="logo-instagram" class="instagram hydrated" role="img" aria-label="logo instagram"></ion-icon>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <p class="last-paragraph">
+                    Copyright © 2019 by Jobs4Intern. All rights reserved.
+                </p>
+            </div>
+    </footer>
+
+<!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+
+</body></html>

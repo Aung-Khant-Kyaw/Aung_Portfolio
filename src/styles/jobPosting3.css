@@ -1,0 +1,98 @@
+.jp3-container {
+  color: #2c423f;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+}
+
+.jp3-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.jp3-headline {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.jp3-guide {
+  font-size: medium;
+  font-style: italic;
+}
+
+.jp3-body-wrapper {
+  justify-content: space-around;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  border-top: 1px solid;
+}
+
+.jp3-left {
+  line-height: 2rem;
+}
+
+.jp3-poc-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.jp3-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.jp3-value,
+.jp3-state-value {
+  width: 500px;
+  border-width: 1px;
+}
+
+.jp3-state-value {
+  margin-top: -10px;
+}
+
+.jp3-submit-btn {
+  border: #26506c;
+  background-color: #26506c;
+  color: #fff;
+  padding: 7px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  border-radius: 15px;
+  text-align: center;
+  transition: ease-in-out 0.3s;
+}
+
+.jp3-submit-btn:hover {
+  cursor: pointer;
+  background-color: #5988a7;
+  color: #fff;
+}
+
+.jp3-bottom-btn {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.jp3-cancel-btn {
+  border: 1px solid rgb(255, 38, 0);
+  padding: 5px 25px;
+}
+
+.jp3-cancel-btn:hover {
+  cursor: pointer;
+  background-color: rgb(250, 65, 32);
+  color: #fff;
+  padding: 5px;
+}

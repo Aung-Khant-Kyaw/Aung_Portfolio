@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Home from './pages/home'
+import About from './pages/about'
+import Login from './pages/login'
+import ForgotPassword from './pages/forgotPassword'
+import ResetPassword from './pages/resetPassword'
+import Notifications from './pages/notifications'
+import Donate from './pages/donate'
+import Dashboard from './pages/dashboard'
+import FaqPage from './pages/faqPage'
+import Contact from './pages/contact'
+import Messages from './pages/messages'
+import Registration from './pages/registration'
+import ConfirmationCode from './pages/confirmationCode'
+import ConfirmationPage from './pages/confirmationPage'
+import ViewJobPosting from './pages/viewJobPosting'
+import ApplytoJob from './pages/applyToJob'
+import ProfileStudent from './pages/student/profileStudent'
+import ApplyToJob from './pages/student/applyToJob'
+import ProfileBusiness from './pages/business/profileBusiness'
+import Register from './pages/register'
+import AdminUserControls from './pages/admin/adminUserControls'
+import AdminReviews from './pages/admin/adminReviews'
+import AdminJobPostings from './pages/admin/adminJobPostings'
+import AdminSecurity from './pages/admin/adminSecurity'
+import SuccessfulUser from './pages/successfulUser'
+
+import { auth } from './utils/auth'
+import { encrypt } from './utils/encryption'
+import { toastFail, toastInfo } from './utils/toastFuncs'
+
+import './styles/App.css';
+import { render } from 'react-dom';
+
+/**
+ * This class provides the client side application overall functions and application formatting container
+ * @class
+ * @version 0.1
+ * @see Modules/Users[api]
+ * @see react
+ * @see react-router-dom
+ * @see Modules/ScrollToTop
+ * @see Classes/Navbar
+ * @see Modules/Footer
+ * @see Classes/Home
+ * @see Classes/About
+ * @see Classes/Login
+ * @see Classes/ForgotPassword
+ * @see Classes/ResetPassword
+ * @see Classes/Notifications
+ * @see Classes/Donate
+ * @see Classes/FaqPage
+ * @see Classes/Contact
+ * @see Classes/Messages
+ * @see Classes/Registration
+ * @see Classes/ConfirmationCode
+ * @see Classes/ConfirmationPage
+ * @see Classes/ViewJobPosting
+ * @see Classes/ApplyToJob
+ * @see Classes/ProfileStudent
+ * @see Classes/Register
+ * @see Classes/AdminUserControls
+ * @see Classes/AdminReviews
+ * @see Classes/AdminJobPostings
+ * @see Classes/AdminSecurity
+ * @see Classes/SuccessfulUser
+ * @see Modules/Auth
+ * @see Modules/Encrypt
+ * @see Modules/toastFuncs
+ * @see styles/App.css
+ * @see react-dom
+ */
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+        user: null
+    }
+  }
+
+  /**
+   * This function handles the API calls for user login and creates the user token on successful login.
+   * @function
+   * @param {String} email - The string of the user email
+   * @param {String} password - The string of the user password (encrypted)
+   * @see Modules/Users[api]/post/login
+   */
+  handleLogin = (email, password) => {
+    fetch(`https://localhost:5000/api/users/login`, {
+            method: 'post',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: encrypt(password, email)
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.role === "Error") {
+                toastFail(res.error)
+                return false
+            } else {
+                localStorage.setItem('J4Itoken', JSON.stringify({
+                    ID: res.ID
+                }))
+                this.setState({ user: res })                
+            }
+        })
+  }
+
+  /**
+   * This function handles the log out action by removing the user token and sending them back to the home menu.
+   * @function
+   * @async
+   * @param {Event} event - The event from the log out button
+   */
+  handleLogout = async (event) => {
+    event.preventDefault();
+    await localStorage.removeItem('J4Itoken')
+    this.setState({ user : null });
+  }
+
+  /**
+   * This function is called after the page is loaded to check if the user is remembered as an authorized user
+   * @function
+   * @async
+   */
+  async componentDidMount() {
+    let authUser = await auth();
+    if (authUser) {
+      this.setState({ user: authUser })
+    }
+  }
+  
+  /**
+   * This function provides the general HTML formatting of the App with the Navbar at the top. It additionally sets up the routes for the app's other pages.
+   * @function
+   * @returns {HTMLCollection}
+   * @see Modules/ScrollToTop
+   * @see Classes/Navbar
+   * @see Modules/Footer
+   * @see Classes/Home
+   * @see Classes/About
+   * @see Classes/Login
+   * @see Classes/ForgotPassword
+   * @see Classes/ResetPassword
+   * @see Classes/Notifications
+   * @see Classes/Donate
+   * @see Classes/FaqPage
+   * @see Classes/Contact
+   * @see Classes/Messages
+   * @see Classes/Registration
+   * @see Classes/ConfirmationCode
+   * @see Classes/ConfirmationPage
+   * @see Classes/ViewJobPosting
+   * @see Classes/ApplyToJob
+   * @see Classes/ProfileStudent
+   * @see Classes/Register
+   * @see Classes/AdminUserControls
+   * @see Classes/AdminReviews
+   * @see Classes/AdminJobPostings
+   * @see Classes/AdminSecurity
+   * @see Classes/SuccessfulUser
+   * @see Modules/Auth
+   * @see Modules/Encrypt
+   * @see Modules/toastFuncs
+   */
+  render() {
+    return (
+      &lt;>
+      &lt;Router>
+          &lt;ScrollToTop />
+          &lt;Navbar user={this.state.user} handleLogout={this.handleLogout}/>
+            &lt;Switch>
+                  &lt;Route exact path="/" render={(props) => &lt;Home {...props} user={this.state.user}/>} />
+                  &lt;Route exact path="/login" render={(props) => &lt;Login {...props} user={this.state.user} handleLogin={this.handleLogin}/>} />
+                  &lt;Route exact path="/forgot-password" component={ForgotPassword} />
+                  &lt;Route exact path="/reset-password" component={ResetPassword} />
+                  &lt;Route path="/notifications" component={Notifications} />
+                  &lt;Route path="/donate" component={Donate} />
+                  &lt;Route path="/dashboard" render={(props) => &lt;Dashboard {...props} user={this.state.user}/>} />
+                  &lt;Route path="/faq" component={FaqPage} />
+                  &lt;Route path="/contact-us" component={Contact} />
+                  &lt;Route exact path="/messages" render={(props) => &lt;Messages {...props}/>} />
+                  &lt;Route path="/about" component={About} />
+                  &lt;Route path="/registration" render={(props) => &lt;Registration {...props}/>} />
+                  &lt;Route path="/confirmation-code" component={ConfirmationCode} />
+                  &lt;Route path="/confirmation-page" component={ConfirmationPage} />
+                  &lt;Route path="/view-job-posting" component={ViewJobPosting} />
+                  &lt;Route path="/apply-job" component={ApplytoJob} />
+                  &lt;Route path="/registration-student" component={Register} />
+                  &lt;Route path="/profile-student" component={ProfileStudent} />
+                  &lt;Route path="/new-apply" component={ApplyToJob} />
+                  &lt;Route path="/registration-business" component={Register} />
+                  &lt;Route path="/registration-admin" component={Register} />
+                  &lt;Route path="/profile-business" component={ProfileBusiness} />
+                  &lt;Route path="/admin-usercontrols" component={AdminUserControls} />
+                  &lt;Route path="/admin-reviews" component={AdminReviews} />
+                  &lt;Route path="/admin-jobpostings" component={AdminJobPostings} />
+                  &lt;Route path="/admin-security" component={AdminSecurity} />
+                  &lt;Route path="/successful" component={SuccessfulUser} />
+              &lt;/Switch>
+            &lt;Footer />
+      &lt;/Router>
+      &lt;/>
+    );
+  }
+}
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AdminApproval.html">AdminApproval</a></li><li><a href="module-AdminRegStart.html">AdminRegStart</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-BusinessInfo.html">BusinessInfo</a></li><li><a href="module-BusinessRegStart.html">BusinessRegStart</a></li><li><a href="module-default.html">default</a></li><li><a href="module-encryption.html">encryption</a></li><li><a href="module-FAQ.html">FAQ</a></li><li><a href="module-fieldValidation.html">fieldValidation</a></li><li><a href="module-Footer.html">Footer</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Job.html">Job</a></li><li><a href="module-JobList.html">JobList</a></li><li><a href="module-jobs%255Bapi%255D.html">jobs[api]</a></li><li><a href="module-jobs%255Bmodel%255D.html">jobs[model]</a></li><li><a href="module-PublicProfile.html">PublicProfile</a></li><li><a href="module-reportWebVitals.html">reportWebVitals</a></li><li><a href="module-ScrollToTop.html">ScrollToTop</a></li><li><a href="module-SecurityQuestions.html">SecurityQuestions</a></li><li><a href="module-server.html">server</a></li><li><a href="module-SetPassword.html">SetPassword</a></li><li><a href="module-StudentInfo.html">StudentInfo</a></li><li><a href="module-studentRegStart.html">studentRegStart</a></li><li><a href="module-toastFuncs.html">toastFuncs</a></li><li><a href="module-usernameEmailInUseCheck.html">usernameEmailInUseCheck</a></li><li><a href="module-users%255Bapi%255D.html">users[api]</a></li><li><a href="module-users%255Bmodel%255D.html">users[model]</a></li></ul><h3>Namespaces</h3><ul><li><a href="Incomplete.html">Incomplete</a></li><li><a href="Reusable.html">Reusable</a></li></ul><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AdminJobPostings.html">AdminJobPostings</a></li><li><a href="AdminReviews.html">AdminReviews</a></li><li><a href="AdminSecurity.html">AdminSecurity</a></li><li><a href="AdminUserControls.html">AdminUserControls</a></li><li><a href="AllJobPostings.html">AllJobPostings</a></li><li><a href="App.html">App</a></li><li><a href="ApplytoJob.html">ApplytoJob</a></li><li><a href="ApplyToJob_.html">ApplyToJob</a></li><li><a href="ConfirmationCode.html">ConfirmationCode</a></li><li><a href="ConfirmationPage.html">ConfirmationPage</a></li><li><a href="Contact.html">Contact</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Donate.html">Donate</a></li><li><a href="FaqPage.html">FaqPage</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Home.html">Home</a></li><li><a href="JobsAppliedTo.html">JobsAppliedTo</a></li><li><a href="JobSearchResults.html">JobSearchResults</a></li><li><a href="JobsSaved.html">JobsSaved</a></li><li><a href="Login.html">Login</a></li><li><a href="Messages.html">Messages</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="NewJobPosting.html">NewJobPosting</a></li><li><a href="Notifications.html">Notifications</a></li><li><a href="ProfileBusiness.html">ProfileBusiness</a></li><li><a href="ProfileStudent.html">ProfileStudent</a></li><li><a href="Register.html">Register</a></li><li><a href="Registration.html">Registration</a></li><li><a href="registrationAdminPage1.html">registrationAdminPage1</a></li><li><a href="RegistrationAdminPage2.html">RegistrationAdminPage2</a></li><li><a href="RegistrationAdminPage3.html">RegistrationAdminPage3</a></li><li><a href="ResetPassword.html">ResetPassword</a></li><li><a href="Review.html">Review</a></li><li><a href="ReviewReceived.html">ReviewReceived</a></li><li><a href="ReviewsGiven.html">ReviewsGiven</a></li><li><a href="ViewJobPosting.html">ViewJobPosting</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="PointerEvent.html">PointerEvent</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Child">Child</a></li><li><a href="global.html#connectDB">connectDB</a></li><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#persist">persist</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Feb 23 2022 10:20:20 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

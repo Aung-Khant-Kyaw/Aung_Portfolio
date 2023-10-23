@@ -1,0 +1,14 @@
+.dash-std-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  padding-left: 8px;
+  padding-right:8px;
+  font-size: 0.9em;
+  border-bottom: 0.8px solid gray;
+  transition: ease-in-out 0.3s;
+}
+
+

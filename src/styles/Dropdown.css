@@ -1,0 +1,71 @@
+.dropdown-menu {
+  background: red;
+  width: 200px;
+  position: absolute;
+  top: 80px;
+  list-style: none;
+  text-align: start;
+}
+
+.dropdown-menu li {
+  background: var(--dark-blue-background);
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background: #ddd;
+}
+
+.dropdown-menu.clicked {
+  display: none;
+}
+
+.dropdown-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+  color: white;
+  padding: 16px;
+}
+.dropdown-link:hover {
+  color: black;
+}
+
+@media screen and (max-width: 960px) {
+  .fa-caret-down {
+    display: none;
+  }
+}
+
+/* Dropdown container */
+.dropdown-container {
+  position: relative;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: relative;
+
+  min-width: 160px;
+
+  z-index: 1;
+  width: 95%;
+  padding: 10px;
+}
+
+/* Show the dropdown content */
+.show {
+  display: block;
+  margin-top: 6px;
+}
+
+button#socialMediaToggle {
+  /* Your existing styles here */
+
+  /* Add these properties to make the button smaller */
+  font-size: 12px; /* Adjust the font size to your preference */
+  padding: 3px 5px; /* Adjust padding for width and height */
+  /* You can also set a specific width and height if needed */
+}

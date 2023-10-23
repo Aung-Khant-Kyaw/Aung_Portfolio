@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/student/studentRegStart.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/student/studentRegStart.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module studentRegStart
+ */
+import SelectUSState from 'react-select-us-states'
+import PhoneInput from 'react-phone-number-input/input'
+
+/**
+ * This function provides the HTML formatting for the first page of the student registration process
+ * @param {State} props - State information from register.js that calls this function
+ * @returns {HTMLCollection}
+ */
+function StudentRegStart(props) {
+    return (
+        &lt;>
+            &lt;label>
+                User Name:
+                &lt;input 
+                    value={props.state.username}
+                    id="username"
+                    type="text"
+                    minLength="5"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+            &lt;label>
+                First Name:
+                &lt;input value={props.state.firstName}
+                    id="firstName"
+                    type="text"
+                    maxLength="30"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                Last Name:
+                &lt;input value={props.state.lastName}
+                    id="lastName"
+                    type="text"
+                    maxLength="30"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                Email:
+                &lt;input value={props.state.email}
+                    id="email"
+                    type="email"
+                    pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                Address:
+                &lt;input value={props.state.addressStreet}
+                    id="addressStreet"
+                    type="text"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                Address Line 2:
+                &lt;input value={props.state.addressStreet2}
+                    id="addressStreet2"
+                    type="text"
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                City:
+                &lt;input value={props.state.addressCity}
+                    id="addressCity"
+                    type="text"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                State:
+                &lt;SelectUSState value={props.state.addressState}
+                    id="addressState"
+                    type="text"
+                    required
+                    onLoad={e => props.handleStateStart(e)}
+                    onChange={e => props.handleStateChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                Zip Code:
+                &lt;input value={props.state.addressZip}
+                    id="addressZip"
+                    type="text"
+                    minLength="5"
+                    maxLength="10"
+                    pattern="[0-9-]*"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+
+            &lt;label>
+                Phone Number:
+                &lt;input value={props.state.phoneNumber}
+                    id="phoneNumber"
+                    type="text"
+                    minLength="10"
+                    maxLength="10"
+                    pattern="[0-9]*"
+                    required
+                    onChange={e => props.handleChange(e)}
+                    onBlur={e => props.handleFocusChange(e)}
+                />
+            &lt;/label>
+        &lt;/>
+    )
+}
+
+export default StudentRegStart</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-businesses%255Bapi%255D.html">businesses[api]</a></li><li><a href="module-encryption.html">encryption</a></li><li><a href="module-fieldValidation.html">fieldValidation</a></li><li><a href="module-jobs.html">jobs</a></li><li><a href="module-studentRegStart.html">studentRegStart</a></li><li><a href="module-usernameEmailInUseCheck.html">usernameEmailInUseCheck</a></li><li><a href="module-users.html">users</a></li></ul><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="ApplytoJob.html">ApplytoJob</a></li><li><a href="Contact.html">Contact</a></li><li><a href="FaqPage.html">FaqPage</a></li><li><a href="JobSearchResults.html">JobSearchResults</a></li><li><a href="Register.html">Register</a></li><li><a href="Registration.html">Registration</a></li><li><a href="ViewJobPosting.html">ViewJobPosting</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="PointerEvent.html">PointerEvent</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#persist">persist</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Feb 10 2022 09:00:13 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

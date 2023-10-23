@@ -1,0 +1,149 @@
+.profile-page-container-stud {
+  border-radius: 10px;
+}
+
+.profile-container-stud {
+  display: grid;
+  grid-template-columns: 3fr 4fr 0.8fr;
+  padding: 20px;
+}
+
+.column-right-wrapper-stud {
+  padding-top: 25px;
+}
+
+.column-left-stud {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10%;
+  padding-top: 35px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.add-docs-btn {
+  border-radius: 7px;
+  border: 1px solid #26506c;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: ease-in-out 0.3s;
+}
+
+.add-docs-btn:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: white;
+}
+
+.add-docs-btn-icon {
+  padding: 5px 0;
+  margin-top: 7px;
+}
+
+.add-docs-btn-title {
+  padding: 5px 5px;
+  text-align: center;
+}
+
+.docs-small-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.docs-small-wrapper>div {
+  font-size: 0.8em;
+}
+
+.document-info {
+  display: grid;
+  grid-template-columns: 6fr 3fr 1fr;
+  align-items: center;
+}
+
+.doc-icon {
+  text-align: center;
+  border: 1px solid rgb(255, 38, 0);
+  border-radius: 8px;
+  transition: ease-in-out 0.3s;
+}
+
+.doc-icon:hover {
+  cursor: pointer;
+  color: azure;
+  background-color: rgb(255, 38, 0);
+}
+
+.document-info {
+  border: 1px solid rgb(181, 181, 181, 0.7);
+  margin: 8px 0;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.doc-name {
+  font-size: 0.8em;
+}
+
+.file-name {
+  font-size: 0.7em;
+}
+
+.doc-type {
+  font-size: 0.75em;
+}
+
+.stud-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stud-back-btn {
+  width: 120px;
+  border: 1px solid #26506c;
+  text-align: center;
+  border-radius: 10px;
+  transition: ease-in-out 0.3s;
+  font-weight: 600;
+}
+
+.stud-back-btn:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fff;
+}
+
+.stud-update-btn {
+  width: 170px;
+  border: 1px solid rgb(40, 179, 225);
+  text-align: center;
+  border-radius: 10px;
+  transition: ease-in-out 0.3s;
+  font-weight: 600;
+}
+
+.stud-update-btn:hover {
+  cursor: pointer;
+  background-color: rgb(40, 179, 225);
+  color: #fff;
+}
+
+.stud-update-btn.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.stud-back-btn.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,85 @@
+.home-container {
+  position: relative;
+  margin: 0px auto;
+  text-align: center;
+  color: white;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+}
+
+.home-boxes {
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+}
+
+.home-boxes div {
+  border: 1px solid var(--orange-base-color);
+  width: 30%;
+  padding: 10px;
+  background: rgb(78, 78, 78);
+}
+
+.home-boxes h4 {
+  font-size: 1.3em;
+  margin: 10px;
+}
+
+.welcome-container {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 7vh;
+  padding-bottom: 5vh;
+  width: 30%;
+  min-width:300px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.welcomeMessage {
+  color: black;
+  font-size: 120%;
+  padding: 0 20px;
+}
+
+.welcomeMessageTitle {
+  color: black;
+  font-size: 250%;
+  font-weight: bold;
+}
+
+@media (max-width: 962px) {
+  .welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 50%;
+  }
+
+  .welcomeMessageTitle {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 200%;
+  }
+}
+
+.meetImage {
+  width: 5vw;
+  height: 10vh;
+}
+
+.home-container hr {
+  border-color: var(--orange-base-color);
+  width: 12vw;
+  margin-bottom: 7vh;
+}
+
+.homepage-bgimage {
+  background: url('https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5e020def4e2917000783d582%2F0x0.jpg');
+  height: 89vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -1,0 +1,69 @@
+.card-container{
+    background-color: #ccc;
+    border-radius: 15px;
+    padding: 3%;
+    display:flex;
+    position: relative;
+}
+
+.border{
+    border-width: 2px;
+    border-color: red; 
+    border-style: solid;
+}
+.business{
+    margin-top: 5px;
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+.left{
+    width: calc(100% - 30px);
+}
+.full{
+    background-color: #ccc;
+    border-radius: 15px;
+    padding: 2%;
+    overflow-x: hidden;
+    max-height: 100px;
+}
+.job-title-full{
+    font-size: 0.9rem;
+    font-weight: bold;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+.job_title{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.cardInfo{
+    padding-left: 10px;
+    font-size: 15px;
+}
+
+.button{
+    height: 35px;
+    width: 30px;
+}
+.button:hover{
+    cursor: pointer;
+}
+
+.card-button{
+    border-radius: 5px;
+    border: 1px solid #26506c;
+    color: white;
+    padding: 5px 12px;
+    font-size: 0.8em;
+    width: max-content;
+    background: #26506c;
+}
+.card-button:hover{
+    cursor:pointer;
+}
+
+.user-card-wrapper{
+    margin: 5px 0 5px 0;
+}

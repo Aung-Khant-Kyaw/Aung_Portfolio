@@ -1,0 +1,322 @@
+y.dash-container {
+  padding: 20px;
+}
+
+.dash-header {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.dash-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.job-post-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.job-post {
+  cursor: pointer;
+}
+
+.job-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+.job-card h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.job-card p {
+  margin-bottom: 5px;
+}
+
+.job-modal {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.job-modal h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.job-modal p {
+  margin-bottom: 5px;
+}
+
+.job-modal .modal-close {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.job-modal .modal-close:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------JobModal.css ---------------------------*/
+.border {
+  border-width: 2px;
+  border-color: red;
+  border-style: solid;
+}
+
+/* Whole Page */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+/* Whole Page */
+.profile-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+/* Whole Page for onClick event */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* main modal box */
+.modal-wrapper {
+  min-height: 70vh;
+  height: 70vh;
+  border: 1px solid #ccc;
+  width: 30%;
+  margin: 0 auto;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+  position: relative;
+}
+
+.profile-modal-wrapper {
+  min-height: 70vh;
+  height: 70vh;
+  width: calc(80% - 150px);
+  border-radius: 10px;
+  box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+  background-color: #fff;
+  margin: 25px auto 0 auto;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+/* main-info box */
+.main-info {
+  padding: 1vh 1vw 0.5vw 1vw;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  max-height: 20%;
+  background-color: #ccc;
+  /* for sticky div, top is a must */
+  position: sticky;
+  top: 0;
+  /* for positioning left and right divs */
+  display: flex;
+  flex-direction: row;
+  /* overflow: auto when too small */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Job Title of the modal */
+.business-title {
+  font-size: 1.5vw;
+  font-weight: 700;
+}
+
+/* business name and location of the modal */
+.business-info {
+  font-size: 1.3vw;
+  padding-left: 1vw;
+}
+
+/* buttons side of the main-info */
+.right {
+  /* align the button to the right of the main-info div */
+  font-size: 1.3vw;
+  text-align: right;
+}
+
+/* next and previous button */
+.next-button,
+.previous-button {
+  cursor: pointer;
+}
+
+.applied-button {
+  background: #26506c;
+  color: white;
+  cursor: auto;
+}
+
+.applied-button:hover {
+  background: #26506c;
+  color: white;
+  cursor: auto;
+}
+
+/* job close button */
+.job-close {
+  z-index: 0;
+  width: max-content;
+  cursor: pointer;
+  position: absolute;
+  transform: translate(32vh, -37vh);
+}
+/* info div excluding the main-info in job-modal */
+.info-wrapper {
+  padding: 0 1vw;
+  height: 78%;
+  overflow-y: scroll;
+  margin-top: 0;
+  font-size: 1.2vw;
+  line-height: 1.5vw;
+}
+
+.info-wrapper::-webkit-scrollbar {
+  display: block;
+  width: 5px;
+}
+.info-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.info-wrapper::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-right: none;
+  border-left: none;
+}
+
+.info-wrapper::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 10px;
+}
+
+.info-wrapper::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 10px;
+}
+
+/* bottom show more wrapper for showMore */
+.showmore-wrapper {
+  margin-top: 20px;
+  padding-top: 4px;
+}
+
+.showmore-button {
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0;
+}
+
+/* ------------------------- Not Using Right Now ------------------------- */
+.modal-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  overflow-y: scroll;
+}
+
+.job-location,
+.job-type {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.job-description {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.job-details {
+  margin-bottom: 20px;
+}
+
+.job-deadline,
+.job-skills {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.contact-details {
+  margin-bottom: 20px;
+}
+
+.contact-name,
+.contact-title,
+.contact-email {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.archive-btn {
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+.archive-btn:hover {
+  background-color: #999;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.close-btn {
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  background-color: #999;
+}

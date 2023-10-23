@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/job/jobSearchResults.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/job/jobSearchResults.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import { Link } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import { toastFail, toastInfo } from '../../utils/toastFuncs'
+import '../../styles/jobSearchResults.css'
+
+/**
+ * @class
+ */
+class JobSearchResults extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = { };
+    }
+    /**
+     * This function provides the HTML formatting of the job results component
+     * @function
+     * @returns {HTMLCollection}
+     */
+    render() {
+        return (
+           &lt;div className="page-container">
+                &lt;div className="large-container">
+                    &lt;h1 className="title">Job Search Results&lt;/h1>
+                    &lt;hr />
+
+                 &lt;table className="jobResults" id="jobResults">
+                    &lt;tr className="individualJobResult" id="individualJobResult">
+                       &lt;td id="jobLogo">
+                        &lt;img src="./RTI_LOGO.png" className="companyLogo"/>
+                       &lt;/td>
+                       &lt;td className="tableDataResults">
+                           &lt;div id="jobTitle">&lt;b>&lt;a href="">Programmer Intern&lt;/a>&lt;/b>&lt;/div>
+                           &lt;div id="jobCompany">RTI&lt;/div>
+                           &lt;div id="jobLocation">Chantilly, VA  &lt;/div>
+                       &lt;/td>
+                   &lt;/tr>
+                    &lt;tr className="individualJobResult" id="individualJobResult">
+                       &lt;td id="jobLogo">
+                        &lt;img src="./examples/google.jpeg" className="companyLogo"/>
+                       &lt;/td>
+                       &lt;td className="tableDataResults">
+                           &lt;div id="jobTitle">&lt;b>&lt;a href="">Data Scientist&lt;/a>&lt;/b>&lt;/div>
+                           &lt;div id="jobCompany">Google&lt;/div>
+                           &lt;div id="jobLocation">San Diego, CA  &lt;/div>
+                       &lt;/td>
+                   &lt;/tr>
+                    &lt;tr className="individualJobResult" id="individualJobResult">
+                       &lt;td id="jobLogo">
+                        &lt;img src="./examples/apple.png" className="companyLogo"/>
+                       &lt;/td>
+                       &lt;td className="tableDataResults">
+                           &lt;div id="jobTitle">&lt;b>&lt;a href="">Software Engineer&lt;/a>&lt;/b>&lt;/div>
+                           &lt;div id="jobCompany">Apple&lt;/div>
+                           &lt;div id="jobLocation">Cupertino, CA  &lt;/div>
+                       &lt;/td>
+                   &lt;/tr>
+                    &lt;tr className="individualJobResult" id="individualJobResult">
+                       &lt;td id="jobLogo">
+                        &lt;img src="./examples/amazon.jpeg" className="companyLogo"/>
+                       &lt;/td>
+                       &lt;td className="tableDataResults">
+                           &lt;div id="jobTitle">&lt;b>&lt;a href="">Software Engineer&lt;/a>&lt;/b>&lt;/div>
+                           &lt;div id="jobCompany">Amazon&lt;/div>
+                           &lt;div id="jobLocation">San Jose, CA  &lt;/div>
+                       &lt;/td>
+                   &lt;/tr>
+                &lt;/table>
+
+                &lt;div className="button-container-bottom">
+                    &lt;Link to="./jobsearch"> &lt;button className="button-back" type="submit">Back&lt;/button>&lt;/Link>
+                &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        )
+    }
+}
+
+export default JobSearchResults</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-businesses%255Bapi%255D.html">businesses[api]</a></li><li><a href="module-encryption.html">encryption</a></li><li><a href="module-fieldValidation.html">fieldValidation</a></li><li><a href="module-jobs.html">jobs</a></li><li><a href="module-studentRegStart.html">studentRegStart</a></li><li><a href="module-usernameEmailInUseCheck.html">usernameEmailInUseCheck</a></li><li><a href="module-users.html">users</a></li></ul><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="ApplytoJob.html">ApplytoJob</a></li><li><a href="Contact.html">Contact</a></li><li><a href="FaqPage.html">FaqPage</a></li><li><a href="JobSearchResults.html">JobSearchResults</a></li><li><a href="Register.html">Register</a></li><li><a href="Registration.html">Registration</a></li><li><a href="ViewJobPosting.html">ViewJobPosting</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="PointerEvent.html">PointerEvent</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#persist">persist</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Feb 10 2022 09:00:13 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

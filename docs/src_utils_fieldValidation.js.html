@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/utils/fieldValidation.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/utils/fieldValidation.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * fieldValidation.js
+ * @namespace Reusable
+ * @see Modules/fieldValidation
+ */
+
+/**
+ * Module to provide text field validation to registration pages. Includes methods to directly check text fields 
+ * as well as helper functions to check compliance with regex formats. Used by register.js.
+ * @module fieldValidation
+ * @version 0.1
+ * @see Modules/UsernameEmailInCheck
+ * @see Classes/Register
+ */
+import { checkIfEmailInUse, checkIfUsernameInUse} from '../utils/usernameEmailInUseCheck'
+//utility file to handle field error checking everytime a key is pressed should be called in an onChange() event
+/**
+ * This function provides input validation for textfields in a registration page. 
+ * Supported textfields include username, furstName, lastName, email, addressStreet, 
+ * addressStreet2, addressCity, addressState, addressZip, phoneNumber, poc, school, 
+ * graduationYear, gpa, businessDivision, businessName, password, confirmPassword,
+ * and securityAnswer 1-5. Should be called in the handleChange event handler of 
+ * the registration page. Errors checked for include length, contents, validity of
+ * email, password security, and uniqueness of username/email. Used by register.js
+ * @function
+ * @param {event} e - The event handle passed from the handleChange event
+ * @param {Object[]} formErrors - The key value pair object storing each error
+ * @param {Object} state - The current state of the page calling the function
+ * @param {Register} page - The registration page calling this function
+ * @returns {Object[]} - Returns the updated formErrors array
+ * @see Classes/Register
+ */
+export const validateForm = (e, formErrors, state, page) => {
+    let input = e.target.value //text in the textfield
+    let id = e.target.id || e.id //name of the textfield, i.e. username
+    
+    //the following switch statement checks the validity of each field as it is filled in.
+    
+    switch(id){ //handle what to do based on the id of the field 
+        
+        case 'username':
+            if(!minLength(input, 5) || !alphaNumericPlusUnderscoreDash(input)){//username should be at least 5 chars and alphanumeric
+                if(!minLength(input, 5))//too short
+                {
+                    formErrors[''+id+'len']='Username should have at least 5 characters'
+                    e.target.style.borderColor = "red";
+                } else{ //sufficient length
+                    delete formErrors[''+id+'len']
+                }
+                if(!alphaNumeric(input))//not alphanumeric
+                {
+                    formErrors[''+id+'txt']='Username should only be alphanumeric'
+                    e.target.style.borderColor = "red";
+                } else{//alphanumeric
+                    delete formErrors[''+id+'txt']
+                }
+            } else{//meets all requirements
+                e.target.style.borderColor = "green";
+                delete formErrors[''+id+'txt']
+                delete formErrors[''+id+'len']
+                var uresult 
+                checkIfUsernameInUse(input, state.userType).then(result=> {
+                    uresult=result
+                    if(uresult !== undefined){
+                        if(uresult === true){
+                            e.target.style.borderColor = 'red'
+                            formErrors[''+id+'use'] = "This username is already in use"
+                        } else {
+                            delete formErrors[''+id+'use']
+                            e.target.style.borderColor = 'green'
+                        }
+                        page.formErrors = formErrors
+                        page.refresh()
+                        return formErrors
+                    }
+                })
+            }
+            break;
+        case 'firstName':
+            if(!maxLength(input, 30) || !validName(input)){//first name should no greater than 20 chars and alphabetic
+                if(!maxLength(input, 30))//length is greater than 20
+                {
+                    formErrors[''+id+'len']='First name should have at most 30 characters'
+                    e.target.style.borderColor = "red";
+                } else{//length shorter than 20 chars
+                    delete formErrors[''+id+'len']
+                }
+                if(!validName(input))//not alphabetic
+                {
+                    formErrors[''+id+'txt']='First name should be valid'
+                    e.target.style.borderColor = "red";
+                } else{//alphabetic
+                    delete formErrors[''+id+'txt']
+                }
+            } else{//meets all requirements
+                e.target.style.borderColor = "green";
+                delete formErrors[''+id+'txt']
+                delete formErrors[''+id+'len']
+            }
+            break;
+        case 'lastName':
+            if(!maxLength(input, 30) || !validName(input)){//last name should no greater than 20 chars and alphabetic
+                if(!maxLength(input, 30))//length is greater than 20
+                {
+                    formErrors[''+id+'len']='Last name should have at most 30 characters'
+                    e.target.style.borderColor = "red";
+                } else{//length shorter than 20 chars
+                    delete formErrors[''+id+'len']
+                }
+                if(!validName(input))//not alphabetic
+                {
+                    formErrors[''+id+'txt']='Last name should be valid'
+                    e.target.style.borderColor = "red";
+                } else{//alphabetic
+                    delete formErrors[''+id+'txt']
+                }
+            } else{//meets all requirements
+                e.target.style.borderColor = "green";
+                delete formErrors[''+id+'txt']
+                delete formErrors[''+id+'len']
+            }
+            break;
+        case 'email':
+            if(!validEmail(input)){//email should follow correct formatting
+                formErrors[id]='Must use a valid email address'
+                e.target.style.borderColor = "red"
+            }else{
+                e.target.style.borderColor = "green"
+                delete formErrors[id]
+                var eresult 
+                checkIfEmailInUse(input, state.userType).then(result=> {
+                    eresult=result
+                    if(eresult !== undefined){
+                        if(eresult === true){
+                            e.target.style.borderColor = 'red'
+                            formErrors[''+id+'use'] = "This email is already in use"
+                        } else {
+                            delete formErrors[''+id+'use']
+                            e.target.style.borderColor = 'green'
+                        }
+                        page.formErrors = formErrors
+                        page.refresh()
+                        return formErrors
+                    }
+                })
+            }
+            break;
+        case 'addressStreet':
+            if(!minLength(input, 2) || !alphaNumericPlusUnderscoreDashSpace(input)){
+                if(!minLength(input, 2)){
+                    formErrors[''+id+'len'] = 'Address street should have at least two characters'
+                    e.target.style.borderColor = 'red'
+                }else{
+                    delete formErrors[''+id+'len']
+                }
+                if(!alphaNumericPlusUnderscoreDashSpace(input)){
+                    formErrors[''+id+'txt'] = 'Address street should not have special characters'
+                    e.target.style.borderColor = 'red'
+                }else{
+                    delete formErrors[''+id+'txt']
+                }
+            } else {
+                e.target.style.borderColor = 'green'
+                delete formErrors[''+id+'len']
+                delete formErrors[''+id+'txt']
+            }
+            break;
+        case 'addressStreet2':
+            if(!alphaNumericPlusUnderscoreDashSpace(input)){
+                formErrors[''+id+'txt'] = 'Address street line 2 should not have special characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[''+id+'txt']
+            }
+            break;
+        case 'addressCity':
+            if(!alphabeticPlusSpace(input)){//city name should be alphabetic
+                formErrors[id]='City should have an alphabetic name'
+                e.target.style.borderColor = "red"
+            } else{
+                e.target.style.borderColor = "green"
+                delete formErrors[id]
+            }
+            break;
+        case 'addressState':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Address state should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'addressZip':
+            if(!validZip(input)){//phone number should be numeric
+                formErrors[id]='Please enter a valid zip code (either in 5 digit or 5-4 digit format)'
+                e.target.style.borderColor = "red"
+            } else{
+                e.target.style.borderColor = "green"
+                delete formErrors[id]
+            }
+            break;
+        case 'phoneNumber':
+            if(!numeric(input) || !minMaxLength(input, 10, 10)){//phone number should be numeric
+                if(!numeric(input)){
+                    formErrors[''+id+'txt']='Phone number should be numeric'
+                    e.target.style.borderColor = "red"
+                }else{
+                    delete formErrors[''+id+'txt']
+                }
+                if(!minMaxLength(input, 10, 10)){
+                    formErrors[''+id+'len']='Phone number should have 10 characters'
+                    e.target.style.borderColor = "red"
+                }else{
+                    delete formErrors[''+id+'len']
+                }
+            } else{
+                e.target.style.borderColor = "green"
+                delete formErrors[''+id+'txt']
+                delete formErrors[''+id+'len']
+            }
+            break;
+        case 'poc':
+            if(!minLength(input, 1)){
+                formErrors[id]='Point of contact should have at least 3 characters'
+                e.target.style.borderColor = "red"
+            } else{
+                e.target.style.borderColor = "green"
+                delete formErrors[id]
+            }
+            break;
+        case 'school':
+            if(!minLength(input, 3)){//School name should no less than 3 chars
+                formErrors[''+id+'len']='School name should have at least 3 characters'
+                e.target.style.borderColor = "red";
+            } else{//meets all requirements
+                e.target.style.borderColor = "green";
+                delete formErrors[''+id+'len']
+            }
+            break;
+        case 'graduationYear':
+            if(!minMaxLength(input,4, 4)||!numeric(input)){
+                if(!minMaxLength(input,4)){
+                    formErrors[''+id+'len']='Graduation year should have 4 characters'
+                    e.target.style.borderColor = "red";
+                }else{
+                    delete formErrors[''+id+'len']
+                }
+                if(!numeric(input)){
+                    formErrors[''+id+'txt']='Graduation year should be numeric'
+                    e.target.style.borderColor = "red";
+                }else{
+                    delete formErrors[''+id+'txt']
+                }
+            }else{
+                e.target.style.borderColor = "green"
+                delete formErrors[''+id+'txt']
+                delete formErrors[''+id+'len']
+            }
+            break;
+        case 'gpa':
+            if(!minMaxLength(input,1, 4)||!decimal(input) || Number(input) > 4){
+                if(!minMaxLength(input,1,4)){
+                    formErrors[''+id+'len']='GPA should have at least 1 character and at most 4'
+                    e.target.style.borderColor = "red";
+                }else{
+                    delete formErrors[''+id+'len']
+                }
+                if(!decimal(input)){
+                    formErrors[''+id+'txt']='GPA should be a number'
+                    e.target.style.borderColor = "red";
+                }else{
+                    delete formErrors[''+id+'txt']
+                }
+                if(Number(input) > 4){
+                    formErrors[''+id+'val']='GPA should be be less than or equal to 4.0'
+                    e.target.style.borderColor = "red";
+                }
+                else{
+                    delete formErrors[''+id+'val']
+                }
+            }else{
+                e.target.style.borderColor = "green"
+                delete formErrors[''+id+'txt']
+                delete formErrors[''+id+'len']
+                delete formErrors[''+id+'val']
+            }
+            break;
+        case 'businessDivision':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Business Division should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'businessName':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Business Name should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'password':
+            if(!validPassword(input)){
+                formErrors[id]='Please enter a valid password. Passwords must be 8-20 characters long, uses the following symbols -$&amp;@#%!], and at least two Upper case letters, Lower case letters, numbers, and symbols.'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'confirmPassword':
+            if(state.password !== input){
+                formErrors[id]='Confirm password entry does not match password'
+                e.target.style.borderColor = 'red'
+            } else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'securityAnswer1':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Security answer should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'securityAnswer2':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Security answer should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'securityAnswer3':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Security answer should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'securityAnswer4':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Security answer should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        case 'securityAnswer5':
+            if(!minLength(input, 2)){
+                formErrors[id] = 'Security answer should have at least two characters'
+                e.target.style.borderColor = 'red'
+            }else{
+                e.target.style.borderColor = 'green'
+                delete formErrors[id]
+            }
+            break;
+        default:
+            break;
+    }
+    return formErrors
+}
+
+/**
+ * Returns true if the string input is only made of alphabetic characters.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function alphabetic (text) {//use regex to check if the string is alphabetic (returns true if it is)
+    const regex = RegExp(/^[a-zA-Z]*$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is only made of alphabetic characters and spaces.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function alphabeticPlusSpace (text) {//use regex to check if the string is alphabetic (returns true if it is)
+    const regex = RegExp(/^[a-zA-Z ]*$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is only made of alphabetic or numeric characters.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function alphaNumeric (text) {//use regex to check if the string is alphanumeric (returns true if it is)
+    const regex = RegExp(/^[a-zA-Z0-9]*$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is only made of alphabetic, numeric, underscore, or dash characters.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function alphaNumericPlusUnderscoreDash (text) {//use regex to check if the string is alphanumeric (returns true if it is)
+    const regex = RegExp(/^[a-zA-Z0-9-_]*$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is only made of alphabetic, numeric, underscore, space, or dash characters.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function alphaNumericPlusUnderscoreDashSpace (text) {//use regex to check if the string is alphanumeric (returns true if it is)
+    const regex = RegExp(/^[a-zA-Z0-9-_ ]*$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is only made of numeric characters.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function numeric (text) {//use regex to check if the string is alphanumeric (returns true if it is)
+    const regex = RegExp(/^[0-9]*$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is only made of decimal characters.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function decimal (text) {
+    const regex = RegExp(/^[1-9]\d*(\.\d+)?$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is a valid email address.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function validEmail (text) {
+    const regex = RegExp(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the string input is a valid zip code with in 5 or 5-4 digit formats.
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function validZip (text) {
+    const regex = RegExp(/^[0-9]{5}(?:-[0-9]{4})?$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the given string is longer than (or equal in length to) the given minimum length
+ * @param {String} text - The text to check
+ * @param {number} min - The minimum length for the string
+ * @returns {Boolean}
+ */
+function minLength (text, min) {
+    if(text.length >= min){
+        return true
+    }
+    return false
+}
+
+/**
+ * Returns true if the given string is shorter than (or equal in length to) the given maximum length
+ * @param {String} text - The text to check
+ * @param {number} min - The maximum length for the string
+ * @returns {Boolean}
+ */
+function maxLength (text, max) {
+    if(text.length &lt;= max){
+        return true
+    }
+    return false
+}
+
+/**
+ * Returns true if the given text is a valid name, including international names
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function validName (text) {
+    const regex = RegExp(/^[^0-9_!¡?÷?¿/\\+=@#$%ˆ&amp;*(){}|~&lt;>;:[\]]{2,}$/)
+    return regex.test(text)
+}
+
+/**
+ * Returns true if the given string is longer than (or equal in length to) the given minimum length and shorter than (or equal in length to) the given maximum length
+ * @param {String} text - The text to check
+ * @param {number} min - The minimum length for the string
+ * @param {number} max - The maximum length for the string
+ * @returns {Boolean}
+ */
+function minMaxLength (text, min, max) {
+    if(text.length >= min &amp;&amp; text.length &lt;= max){
+        return true
+    }
+    return false
+}
+
+/**
+ * Returns true if the given string is a valid password with two lower case letters, two upper case letters, two symbols, and two numbers
+ * @param {String} text - The text to check
+ * @returns {Boolean}
+ */
+function validPassword (text) {
+    const regex = RegExp(/^(?=.{8,20}$)(?=(?:.*[A-Z]){2,})(?=(?:.*[a-z]){2,})(?=(?:.*[0-9]){2,})(?=(?:.*[-$&amp;@#%!?]){2,}).*/);
+    return regex.test(text)
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AdminApproval.html">AdminApproval</a></li><li><a href="module-AdminRegStart.html">AdminRegStart</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-BusinessInfo.html">BusinessInfo</a></li><li><a href="module-BusinessRegStart.html">BusinessRegStart</a></li><li><a href="module-default.html">default</a></li><li><a href="module-encryption.html">encryption</a></li><li><a href="module-FAQ.html">FAQ</a></li><li><a href="module-fieldValidation.html">fieldValidation</a></li><li><a href="module-Footer.html">Footer</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Job.html">Job</a></li><li><a href="module-JobList.html">JobList</a></li><li><a href="module-jobs%255Bapi%255D.html">jobs[api]</a></li><li><a href="module-jobs%255Bmodel%255D.html">jobs[model]</a></li><li><a href="module-PublicProfile.html">PublicProfile</a></li><li><a href="module-reportWebVitals.html">reportWebVitals</a></li><li><a href="module-ScrollToTop.html">ScrollToTop</a></li><li><a href="module-SecurityQuestions.html">SecurityQuestions</a></li><li><a href="module-server.html">server</a></li><li><a href="module-SetPassword.html">SetPassword</a></li><li><a href="module-StudentInfo.html">StudentInfo</a></li><li><a href="module-studentRegStart.html">studentRegStart</a></li><li><a href="module-toastFuncs.html">toastFuncs</a></li><li><a href="module-usernameEmailInUseCheck.html">usernameEmailInUseCheck</a></li><li><a href="module-users%255Bapi%255D.html">users[api]</a></li><li><a href="module-users%255Bmodel%255D.html">users[model]</a></li></ul><h3>Namespaces</h3><ul><li><a href="Incomplete.html">Incomplete</a></li><li><a href="Reusable.html">Reusable</a></li></ul><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AdminJobPostings.html">AdminJobPostings</a></li><li><a href="AdminReviews.html">AdminReviews</a></li><li><a href="AdminSecurity.html">AdminSecurity</a></li><li><a href="AdminUserControls.html">AdminUserControls</a></li><li><a href="AllJobPostings.html">AllJobPostings</a></li><li><a href="App.html">App</a></li><li><a href="ApplytoJob.html">ApplytoJob</a></li><li><a href="ApplyToJob_.html">ApplyToJob</a></li><li><a href="ConfirmationCode.html">ConfirmationCode</a></li><li><a href="ConfirmationPage.html">ConfirmationPage</a></li><li><a href="Contact.html">Contact</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Donate.html">Donate</a></li><li><a href="FaqPage.html">FaqPage</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Home.html">Home</a></li><li><a href="JobsAppliedTo.html">JobsAppliedTo</a></li><li><a href="JobSearchResults.html">JobSearchResults</a></li><li><a href="JobsSaved.html">JobsSaved</a></li><li><a href="Login.html">Login</a></li><li><a href="Messages.html">Messages</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="NewJobPosting.html">NewJobPosting</a></li><li><a href="Notifications.html">Notifications</a></li><li><a href="ProfileBusiness.html">ProfileBusiness</a></li><li><a href="ProfileStudent.html">ProfileStudent</a></li><li><a href="Register.html">Register</a></li><li><a href="Registration.html">Registration</a></li><li><a href="registrationAdminPage1.html">registrationAdminPage1</a></li><li><a href="RegistrationAdminPage2.html">RegistrationAdminPage2</a></li><li><a href="RegistrationAdminPage3.html">RegistrationAdminPage3</a></li><li><a href="ResetPassword.html">ResetPassword</a></li><li><a href="Review.html">Review</a></li><li><a href="ReviewReceived.html">ReviewReceived</a></li><li><a href="ReviewsGiven.html">ReviewsGiven</a></li><li><a href="ViewJobPosting.html">ViewJobPosting</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="PointerEvent.html">PointerEvent</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Child">Child</a></li><li><a href="global.html#connectDB">connectDB</a></li><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#persist">persist</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Feb 23 2022 10:20:20 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

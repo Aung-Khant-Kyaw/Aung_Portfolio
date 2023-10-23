@@ -1,0 +1,39 @@
+.card-container{
+    background-color: #ccc;
+    border-radius: 15px;
+    padding: 3%;
+    display:flex;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.border{
+    border-width: 2px;
+    border-color: red; 
+    border-style: solid;
+}
+.business{
+    margin-top: 5px;
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.job_title{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.cardInfo{
+    padding-left: 10px;
+    width: fit-content;
+    font-size: 15px;
+}
+
+.button{
+    height: 35px;
+    width: 30px;
+}
+.button:hover{
+    cursor: pointer;
+}

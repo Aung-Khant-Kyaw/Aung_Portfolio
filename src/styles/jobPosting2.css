@@ -1,0 +1,115 @@
+.jp2-container {
+  color: #2c423f;
+  display: flex;
+  padding: auto;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+}
+
+.jp2-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.jp2-headline {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.jp2-guide {
+  font-size: medium;
+  font-style: italic;
+}
+
+.jp2-body-wrapper {
+  display: flex;
+  border-top: 1px solid;
+  align-items: center;
+  gap: 50px;
+}
+
+.jp2-left {
+  position: relative;
+  height: 80vh;
+}
+
+.jp2-right {
+  line-height: 2rem;
+}
+
+.jp2-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.jp2-type {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jp2-value,
+.jp2-select-value {
+  width: 500px;
+  border-width: 1px;
+}
+
+.jp2-select-value {
+  margin-top: -10px;
+  margin-bottom: -1px;
+}
+
+
+.jp2-bottom-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.jp2-back-btn,
+.jp3-back-btn,
+.jp2-cancel-btn {
+
+  font-weight: bold;
+  border-radius: 15px;
+  text-align: center;
+  width: 120px;
+  padding: 5px;
+  background-color: #26506c;
+  color: #fff;
+}
+
+
+.jp2-back-btn:hover,
+.jp3-back-btn:hover {
+  cursor: pointer;
+  background-color: #5988a7;
+  border: #5988a7;
+  color: #fff;
+
+}
+
+.jp2-cancel-btn {
+  border: 1px solid rgb(255, 38, 0);
+  padding: 5px 25px;
+}
+
+.jp2-cancel-btn:hover {
+  cursor: pointer;
+  background-color: rgb(250, 65, 32);
+  color: #fff;
+  padding: 5px;
+}
+
+.jp2-location,
+.jp-state {
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/pages/register.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/pages/register.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import BusinessInfo from '../components/business/businessInfo'
+import SetPassword from '../components/setPassword'
+import BusinessRegStart from '../components/business/businessRegStart'
+import SecurityQuestions from '../components/securityQuestions'
+import StudentRegStart from '../components/student/studentRegStart'
+import StudentInfo from '../components/student/studentInfo'
+import AdminRegStart from '../components/admin/adminRegStart'
+import axios from 'axios'
+import school from '../utils/us_institutions.json'
+import { encrypt } from '../utils/encryption'
+import { validateForm } from '../utils/fieldValidation'
+
+/**
+ * Handles processing and displaying of the registration procedure. 
+ * Provides component rendering information to App.js.
+ * @version 0.1
+ * @class
+ * @see react
+ * @see react-router-dom
+ * @see axios
+ * @see utils/us_institutions.json
+ * @see Modules/BusinessRegStart
+ * @see Modules/BusinessInfo
+ * @see Modules/SetPassword 
+ * @see Modules/SecurityQuestions
+ * @see Modules/StudentRegStart
+ * @see Modules/StudentInfo
+ * @see Modules/AdminRegStart
+ * @see Modules/FieldValidation
+ * @see Modules/Encryption
+ * @see Modules/Users[api]
+ * @see Classes/App
+ */
+class Register extends Component {
+    constructor(props) {
+        super(props)
+        // this._url = props.url || config.get("express.url")
+        this.state = {
+            formErrors: [],
+            page: "init",
+            // order of pages for business and student
+            businessOrder: ['businessRegStart', 'businessInfo', 'setPassword', 'securityQuestions'],
+            studentOrder: ['studentRegStart', 'studentInfo', 'setPassword', 'securityQuestions'],
+            adminOrder: ['adminRegStart', 'setPassword', 'securityQuestions'],
+            currentComponent: 0,
+            userType: props.location.pathname.slice(14),
+            questionVals: [null, null, null, null, null],
+            filterOptions: [
+                {
+                value: "What is the name of your first pet?",
+                label: "What is the name of your first pet?"
+                },
+                {
+                value: "What is the street of your first home?",
+                label: "What is the street of your first home?"
+                },
+                {
+                value: "What is the make or model of your first car?",
+                label: "What is the make or model of your first car?"
+                },
+                {
+                value: "What was your childhood nickname?",
+                label: "What was your childhood nickname?"
+                },
+                {
+                value: "In what city did you meet your spouse / significant other?",
+                label: "In what city did you meet your spouse / significant other?"
+                },
+                {
+                value: "What is the name of your favorite childhood friend?",
+                label: "What is the name of your favorite childhood friend?"
+                },
+                {
+                value: "What street did you live on in third grade?",
+                label: "What street did you live on in third grade?"
+                },
+                {
+                value: "What is the middle name of your youngest child?",
+                label: "What is the middle name of your youngest child?"
+                },
+                {
+                value: "What is the middle name of your oldest sibling?",
+                label: "What is the middle name of your oldest sibling?"
+                },
+                {
+                value: "What school did you attend for sixth grade?",
+                label: "What school did you attend for sixth grade?"
+                },
+                {
+                value: "What was the name of your first stuffed animal?",
+                label: "What was the name of your first stuffed animal?"
+                },
+                {
+                value: "In what city or town did your parents meet?",
+                label: "In what city or town did your parents meet?"
+                }
+            ],
+            hintData: school.map(item => {
+                return item.institution
+            }),
+            redirect: false,
+            formData: {
+                businessRegStart: ["poc", "email", "username"],
+                studentRegStart: ["username", "firstName", "lastName", "email", "addressStreet", "addressStreet2", "addressCity", "addressState","phoneNumber", "addressZip"],
+                adminRegStart: ["username", "firstName", "lastName", "email", "addressStreet", "addressStreet2", "addressCity", "addressState", "phoneNumber", "addressZip"],
+                businessInfo: ["businessName", "addressStreet", "addressStreet2", "addressCity", "addressState", "addressZip"],
+                studentInfo: ["school", "graduationYear", "gpa"],
+                setPassword: ["password", "confirmPassword"],
+                securityQuestions: ["securityAnswer1", "securityAnswer2", "securityAnswer3", "securityAnswer4", "securityAnswer5"]
+            },
+            addressState: "AL",
+        }
+    }
+
+    /**
+     * This function is called everytime one of the text fields is edited. Calls the field validation utility module
+     * @function
+     * @see Modules/FieldValidation
+     * @param {Event} e - event from the onChange tag of the text field
+     */
+    handleChange = (e) => {//this method is called everytime one of the fields is edited
+        
+        let input = e.target.value //text in the textfield
+        let id = e.target.id || e.id //name of the textfield, i.e. username
+
+        this.setState({ [id]: input })
+        let formErrors = this.state.formErrors//list to keep track of errors in the fields
+
+        formErrors = validateForm(e, formErrors, this.state, this)
+
+        this.setState({[formErrors]: formErrors})
+    }
+
+    /**
+     * This function is used to force the page to refresh its contents based on its current state
+     * @function
+     */
+    refresh = () => {
+        this.setState({})
+    }
+
+    /**
+     * This function is called every time the user clicks out of one of the text fields. Currently does nothing, but if code is uncommented will
+     * activate functionality to prevent selection outside of the current text field until it has valid input
+     * @function
+     * @param {Event} e - Event from the onBlur tag of a text field
+     */
+    handleFocusChange = (e) => { //this method is called when the user clicks or tabs out of a text field with the related onBlur attribute (used to return user to the field if they entered input incorrectly)
+        /*
+        let input = e.currentTarget.value//the text currently in the field
+        let id = e.currentTarget.id || e.id //the id of the field i.e. username, etc.
+        let formErrors = this.state.formErrors //array of errors to keep track of what issues are found
+
+        //the following code checks if the field that was just left has an error in it and if so, returns the user to that field
+        
+        let matchingErrorFound = false
+        
+        let errorArray = Object.entries(formErrors)//convert the formErrors key value pairs into an array to iterate through
+        
+        for(let i = 0; i &lt; errorArray.length; i++){//for every error currently in the array
+            
+            let error = errorArray[i]
+            
+            error = error[0]
+            if(error === id || error === ''+id+'txt' || error === ''+id+'len'){//if the error is related to the field that was just left
+                matchingErrorFound = true //a matching error has been found
+                
+            }
+            if(matchingErrorFound){//if a matching error was found
+                e.currentTarget.focus()//return the user to the pervious field
+            }
+        } */
+        /* let input = e.currentTarget.value//the text currently in the field
+        let id = e.currentTarget.id || e.id //the id of the field i.e. username, etc.
+        let formErrors = this.state.formErrors //array of errors to keep track of what issues are found
+        switch(id){
+            case 'username':
+                let uresult = checkIfUsernameInUse(input, this.state.userType)
+                    if(uresult){
+                        e.currentTarget.style.borderColor = 'red'
+                        formErrors[''+id+'use'] = "This username is already in use"
+                        //e.currentTarget.focus()
+                    } else {
+                        delete formErrors[''+id+'use']
+                        if(formErrors[''+id+'txt'].length === 0 &amp;&amp; formErrors[''+id+'len'].length === 0){
+                            e.currentTarget.style.borderColor = 'green'
+                        }
+                    }
+                break;
+            case 'email':
+                let eresult = checkIfEmailInUse(input, this.state.userType)
+                if(eresult){
+                    e.currentTarget.style.borderColor = 'red'
+                    formErrors[''+id+'use'] = "This email is already in use"
+                    //e.currentTarget.focus()
+                } else {
+                    delete formErrors[''+id+'use']
+                    if(formErrors[id].length === 0){
+                        e.currentTarget.style.borderColor = 'green'
+                    }
+                }
+                break;
+            default:
+                break;
+        } */
+        //console.log(formErrors)
+        //this.setState({[formErrors]: formErrors})
+    }
+
+    /**
+     * This function is called everytime the state changes
+     * @function
+     * @param {State} e - state to update to
+     */
+    handleStateChange = (e) => {
+        this.setState({addressState: e})
+    }
+
+    /**
+     * This function is called on page load to set the default state, Alabama
+     * @function
+     * @param {Event} e - Event from page load
+     */
+    handleStateStart = (e) => {
+        this.setState({addressState: "AL"})
+    }
+
+    /**
+     * Sets state's phone variable to the given string
+     * @function
+     * @param {String} value - String entered for phone number
+     */
+    handlePhone = (value) => {
+        this.setState({phone:value})
+    }
+
+    /**
+     * This function gets available security question indices
+     * @function
+     * @returns {number} - Index of questions option available
+     */
+    getOptions = () => {
+        const availableOptionsLeft = this.state.filterOptions;
+        return availableOptionsLeft.filter(questionOption => {
+          return this.state.questionVals.indexOf(questionOption) === -1;
+        });
+      };
+    
+    /**
+     * This function handles changes in the security question option
+     * @function
+     * @param {String} option - The string of the question option selected
+     * @param {number} index - The index of the option selected
+     */
+    handleQuestionChange = (option, index) => {
+        const newQuestionVals = this.state.questionVals;
+        newQuestionVals[index] = option;
+        this.setState(state => {
+            return {
+                questionVals: newQuestionVals
+            };
+        });
+    }
+
+    /**
+     * This function called by the onSubmit callback function to check for missing required fields and 
+     * input issues and then handles page changes if necessary. Additionally, it posts new users to the
+     * API when they are fully added. Makes use of the encryption module to encrypt passwords.
+     * @function
+     * @async
+     * @see Modules/Encryption
+     * @see Modules/Users[api]/Post/
+     * @returns {null}
+     */
+    handleSubmit = async () => {
+        let errors = "";
+        let fields = this.state.formData[this.state[`${this.state.userType}Order`][this.state.currentComponent]]
+        for(let field of fields) {
+            if(!this.state[field]) {
+                // error display needed
+                errors = `Please fill out all of the fields, currently missing: ${field}`
+                this.setState({ errors })
+                return
+            }
+        }
+        for(let val of this.state.questionVals) {
+            if(val == null) {
+                errors = `Please Select a Question for ALL Fields`
+                this.setState({ errors })
+                return
+            }
+        }
+        let data = {}
+        console.log(this.state)
+        if(this.state.userType === 'business') {
+            data = {
+                userType: "business",
+                poc: this.state.poc,
+                username:  this.state.username,
+                email: this.state.email,
+                businessName: this.state.businessName,
+                businessDivision: this.state.businessDivision,
+                businessStreet: this.state.addressStreet,
+                businessStreet2: this.state.addressStreet2,
+                businessCity: this.state.addressCity,
+                businessState: this.state.addressState,
+                businessZip: this.state.addressZip,
+                password: encrypt(this.state.password, this.state.email),
+                questionOne: this.state.questionVals[0].value,
+                questionTwo: this.state.questionVals[1].value,
+                questionThree: this.state.questionVals[2].value,
+                questionFour: this.state.questionVals[3].value,
+                questionFive: this.state.questionVals[4].value,
+                answerOne: this.state.securityAnswer1,
+                answerTwo: this.state.securityAnswer2,
+                answerThree: this.state.securityAnswer3,
+                answerFour: this.state.securityAnswer4,
+                answerFive: this.state.securityAnswer5
+            }
+        } else if(this.state.userType === 'student') {
+            data = {
+                userType: "student",
+                username:  this.state.username,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                userStreet: this.state.addressStreet,
+                userStreet2: this.state.addressStreet2,
+                userCity: this.state.addressCity,
+                userState: this.state.addressState,
+                userZip: this.state.addressZip,
+                userPhone: this.state.phoneNumber,
+                institution: this.state.school,
+                gradYear: this.state.graduationYear,
+                GPA: this.state.gpa,
+                password: encrypt(this.state.password, this.state.email),
+                questionOne: this.state.questionVals[0].value,
+                questionTwo: this.state.questionVals[1].value,
+                questionThree: this.state.questionVals[2].value,
+                questionFour: this.state.questionVals[3].value,
+                questionFive: this.state.questionVals[4].value,
+                answerOne: this.state.securityAnswer1,
+                answerTwo: this.state.securityAnswer2,
+                answerThree: this.state.securityAnswer3,
+                answerFour: this.state.securityAnswer4,
+                answerFive: this.state.securityAnswer5
+            }
+        } else if(this.state.userType === 'admin') {
+            // @TODO: add route for admin, and add builder here
+        }
+        try {
+            let res = await axios.post(`https://localhost:5000/api/users`, data);
+            if(res === "error") {
+              // display error msg
+            } else {
+                this.setState({redirect: true})
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    /**
+     * Gets the correct component to display for the current state. Available components include businessRegStart, businessInfo, setPassword, securityQuestions,
+     * studentRegStart, studentInfo, and adminRegStart. The component to display is selected based on the user selected userType and the current step of the 
+     * registration process.The correct process orders are as follows. For business users, businessRegStart->businessInfo->setPassword->securityQuestions.
+     * For student users, studentRegStart->studentInfo->setPassword->securityQuestions. For admin users, adminRegStart->setPassword->securityQuestions.
+     * @function
+     * @see Modules/BusinessRegStart
+     * @see Modules/BusinessInfo
+     * @see Modules/SetPassword 
+     * @see Modules/SecurityQuestions
+     * @see Modules/StudentRegStart
+     * @see Modules/StudentInfo
+     * @see Modules/AdminRegStart
+     * @returns {Component} - The component of the current page to display.
+     */
+    getComponent() {
+        if(this.state.userType === "business") {
+            switch(this.state.businessOrder[this.state.currentComponent]) {
+                case 'businessRegStart':
+                    return &lt;BusinessRegStart state={this.state} handleChange={this.handleChange.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)}/>
+                case 'businessInfo':
+                    return &lt;BusinessInfo state={this.state} handleChange={this.handleChange.bind(this)} handleStateChange={this.handleStateChange.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)}/>
+                case 'setPassword':
+                    return &lt;SetPassword state={this.state} handleChange={this.handleChange.bind(this)} handleSubmit={this.validatePassword.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)}/>
+                case 'securityQuestions':
+                    return &lt;SecurityQuestions state={this.state} handleChange={this.handleChange.bind(this)} getAvailableOptions={this.getOptions.bind(this)} handleQuestionValChange={this.handleQuestionChange.bind(this)} handleSubmit={this.handleSubmit.bind(this)}  handleFocusChange={this.handleFocusChange.bind(this)}/>
+            }
+        } else if(this.state.userType === "student") {
+            switch(this.state.studentOrder[this.state.currentComponent]) {
+                case 'studentRegStart':
+                    return &lt;StudentRegStart state={this.state} handleChange={this.handleChange.bind(this)} handleStateChange={this.handleStateChange.bind(this)} handlePhone={this.handlePhone.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)} />
+                case 'studentInfo':
+                    return &lt;StudentInfo state={this.state} handleChange={this.handleChange.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)}/>
+                case 'setPassword':
+                    return &lt;SetPassword state={this.state} handleChange={this.handleChange.bind(this)} handleSubmit={this.validatePassword.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)}/>
+                case 'securityQuestions':
+                    return &lt;SecurityQuestions state={this.state} handleChange={this.handleChange.bind(this)} getAvailableOptions={this.getOptions.bind(this)} handleQuestionValChange={this.handleQuestionChange.bind(this)} handleSubmit={this.handleSubmit.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)} />
+            }
+        } else if(this.state.userType === "admin") {
+            switch(this.state.adminOrder[this.state.currentComponent]) {
+                case 'adminRegStart':
+                    return &lt;AdminRegStart state={this.state} handleChange={this.handleChange.bind(this)} handlePhone={this.handlePhone.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)}/>
+                case 'setPassword':
+                    return &lt;SetPassword state={this.state} handleChange={this.handleChange.bind(this)} handleSubmit={this.validatePassword.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)}/>
+                case 'securityQuestions':
+                    return &lt;SecurityQuestions state={this.state} handleChange={this.handleChange.bind(this)} getAvailableOptions={this.getOptions.bind(this)} handleQuestionValChange={this.handleQuestionChange.bind(this)} handleSubmit={this.handleSubmit.bind(this)} handleFocusChange={this.handleFocusChange.bind(this)} />
+            }
+        }
+        
+    }
+
+    /**
+     * This function makes sure that requested page changes are acceptable based on the current state. This function is called by the 
+     * onSubmit event as part of the callback event for the user selecting the 'Next' button. 
+     * @function
+     * @async
+     * @param {number} val - 1 for page forward or -1 for page back
+     * @returns {null}
+     */
+    // should take in either 1 for page forward or -1 for page back
+    async changePage(val) {
+        let errors = "";
+        // check that all fields are filled
+        let fields = this.state.formData[this.state[`${this.state.userType}Order`][this.state.currentComponent]]
+        if(val > 0) {
+            for(let field of fields) {
+                if(!this.state[field] &amp;&amp; field !== 'addressStreet2') {
+                    // error display needed
+                    console.log(`Please fill out all of the fields, currently missing: ${field}`)
+                    return
+                }
+            }
+        }
+        let errorArray = Object.entries(this.state.formErrors)
+        if(errorArray.length !== 0){
+            return
+        }
+        let newIndex = this.state.currentComponent + val
+        if(this.state[`${this.state.userType}Order`][this.state.currentComponent] === 'setPassword') {
+            if(val > 0) {
+                if(this.validate()) {
+                    this.setState({currentComponent: newIndex})
+                } else {
+                    // display errors
+                }
+            } else {
+                this.setState({currentComponent: newIndex})
+            }
+        }else if(this.state[`${this.state.userType}Order`][this.state.currentComponent] === `${this.state.userType}RegStart`) {
+            let body = {
+                username: this.state.username,
+                email: this.state.email,
+                userType: this.state.userType
+            }
+            let res = await axios.post(`https://localhost:5000/api/users/checkusername`, body)
+            if(res.data.error) {
+                // return error somewhere on screen
+                errors = res.data.error
+            } else {
+                this.setState({currentComponent: newIndex})
+            }
+        } else {
+            this.setState({currentComponent: newIndex})
+        }
+        this.setState({ errors })
+    }
+
+    /**
+     * This function is used for password validation. It is called during the changePage function as a secondary check that valid values are present in the 
+     * password fields after the 'Next' button was selected before allowing the user to view the next page. A valid password has two upper case letters, two 
+     * lower case letters, two numbers, and two symbols. The confirm password field must match the password field to be valid.
+     * @function
+     * @returns {Boolean} - True if the password entrues are valid, false if not.
+     */
+    validate(){
+        let errors = "";
+        let isValid = true;
+
+        if (typeof this.state.password !== "undefined") {
+
+            var pattern = new RegExp("^(?=.{8,20}$)(?=(?:.*[A-Z]){2,})(?=(?:.*[a-z]){2,})(?=(?:.*[0-9]){2,})(?=(?:.*[-$&amp;@#%!?]){2,}).*");
+            if (!pattern.test(this.state.password)) {
+                isValid = false;
+                errors = "Please enter a valid password. Passwords must 8-20 characters long, uses the following symbols -$&amp;@#%!], and at least two Upper case letters, Lower case letters, numbers, and symbols.";
+            }
+        }
+
+        if (typeof this.state.password !== "undefined" &amp;&amp; typeof this.state.confirmPassword !== "undefined") {
+
+            if (this.state.password != this.state.confirmPassword) {
+                isValid = false;
+                errors = "The passwords don't match.";
+            }
+        }
+        this.setState({ errors });
+
+        return isValid;
+    }
+
+    /**
+     * This function is called when the 'Next' button is pressed and calls the appropriate function based on the pages' current location. 
+     * @function
+     * @param {Event} e - Event from the button press
+     */
+    onSubmit(e) {
+        e.preventDefault()
+        if(this.state.currentComponent == this.state[`${this.state.userType}Order`].length - 1) {
+            this.handleSubmit()
+        } else if(this.state.currentComponent == this.state[`${this.state.userType}Order`].length - 2) {
+            if(this.validate()) {
+                this.changePage(1)
+            }
+        } else {
+            this.changePage(1)
+        }
+    }
+
+    /**
+     * Displays the page with the correct componenets based on the getComponent() function to App.js. Form based pages
+     * display error messages and text field coloring based on the field validation scripts called in the onChange 
+     * callback events.
+     * @function
+     * @see getComponent()
+     * @returns {HTMLCollection}
+     * @see Classes/App
+     */
+    render() {
+        return (
+            &lt;div className="page-container">
+                {this.state.redirect ? &lt;Redirect to="/confirmation-page" /> : null}
+                &lt;div className="form-container">
+                    &lt;h1 className="title">Register as a {this.state.userType}&lt;/h1>
+                    &lt;hr />
+                    &lt;div className="form-steps">
+                        &lt;img src="stepCheck.png"/>
+                        {this.state.currentComponent > 0 ? &lt;img src="stepCheck.png"/> : this.state.currentComponent == 0 ? &lt;img src="step2.png"/> : &lt;img className="image-bw" src="step2.png"/>}
+                        {this.state.currentComponent > 1 ? &lt;img src="stepCheck.png"/> : this.state.currentComponent == 1 ? &lt;img src="step3.png"/> : &lt;img className="image-bw" src="step3.png"/>}
+                        {this.state.currentComponent > 2 ? &lt;img src="stepCheck.png"/> : this.state.currentComponent == 2 ? &lt;img src="step4.png"/> : &lt;img className="image-bw" src="step4.png"/>}
+                        {this.state.userType === "admin" ? null : this.state.currentComponent > 3 ? &lt;img src="stepCheck.png"/> : this.state.currentComponent == 3 ? &lt;img src="step5.png"/> : &lt;img className="image-bw" src="step5.png"/>}
+                    &lt;/div>
+                    &lt;ul>
+                        {Object.entries(this.state.formErrors || {}).map(([prop, value]) => {
+                            return (
+                            &lt;li className='error-message' key={prop} style={{color:'red'}}>
+                                {value}
+                            &lt;/li>
+                            );
+                        })}
+                    &lt;/ul>
+                    &lt;form className="fields" onSubmit={e => this.onSubmit(e)}>
+                        {this.getComponent()}
+                        &lt;div className="error">{this.state.errors}&lt;/div>
+                        &lt;div className="button-container-bottom">
+                            {this.state.currentComponent == 0 ? 
+                            &lt;span>&lt;/span>
+                            :
+                            &lt;a onClick={() => this.changePage(-1)}>&lt;button type="button" className="button-back" disabled={Object.entries(this.state.formErrors || {}).length > 0}>Back&lt;/button>&lt;/a>}
+                            
+                            &lt;a>&lt;button className="button-back" type="submit" disabled={Object.entries(this.state.formErrors || {}).length > 0}>Next&lt;/button>&lt;/a>
+                        &lt;/div>
+                    &lt;/form>
+                    &lt;ul>
+                            {Object.entries(this.state.formErrors || {}).map(([prop, value]) => {
+                                return (
+                                &lt;li className='error-message' key={prop} style={{color:'red'}}>
+                                    {value}
+                                &lt;/li>
+                                );
+                            })}
+                        &lt;/ul>
+                &lt;/div>
+            &lt;/div>
+        )
+    }
+}
+
+export default Register</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AdminApproval.html">AdminApproval</a></li><li><a href="module-AdminRegStart.html">AdminRegStart</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-BusinessInfo.html">BusinessInfo</a></li><li><a href="module-BusinessRegStart.html">BusinessRegStart</a></li><li><a href="module-default.html">default</a></li><li><a href="module-encryption.html">encryption</a></li><li><a href="module-FAQ.html">FAQ</a></li><li><a href="module-fieldValidation.html">fieldValidation</a></li><li><a href="module-Footer.html">Footer</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Job.html">Job</a></li><li><a href="module-JobList.html">JobList</a></li><li><a href="module-jobs%255Bapi%255D.html">jobs[api]</a></li><li><a href="module-jobs%255Bmodel%255D.html">jobs[model]</a></li><li><a href="module-PublicProfile.html">PublicProfile</a></li><li><a href="module-reportWebVitals.html">reportWebVitals</a></li><li><a href="module-ScrollToTop.html">ScrollToTop</a></li><li><a href="module-SecurityQuestions.html">SecurityQuestions</a></li><li><a href="module-server.html">server</a></li><li><a href="module-SetPassword.html">SetPassword</a></li><li><a href="module-StudentInfo.html">StudentInfo</a></li><li><a href="module-studentRegStart.html">studentRegStart</a></li><li><a href="module-toastFuncs.html">toastFuncs</a></li><li><a href="module-usernameEmailInUseCheck.html">usernameEmailInUseCheck</a></li><li><a href="module-users%255Bapi%255D.html">users[api]</a></li><li><a href="module-users%255Bmodel%255D.html">users[model]</a></li></ul><h3>Namespaces</h3><ul><li><a href="Incomplete.html">Incomplete</a></li><li><a href="Reusable.html">Reusable</a></li></ul><h3>Classes</h3><ul><li><a href="About.html">About</a></li><li><a href="AdminJobPostings.html">AdminJobPostings</a></li><li><a href="AdminReviews.html">AdminReviews</a></li><li><a href="AdminSecurity.html">AdminSecurity</a></li><li><a href="AdminUserControls.html">AdminUserControls</a></li><li><a href="AllJobPostings.html">AllJobPostings</a></li><li><a href="App.html">App</a></li><li><a href="ApplytoJob.html">ApplytoJob</a></li><li><a href="ApplyToJob_.html">ApplyToJob</a></li><li><a href="ConfirmationCode.html">ConfirmationCode</a></li><li><a href="ConfirmationPage.html">ConfirmationPage</a></li><li><a href="Contact.html">Contact</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Donate.html">Donate</a></li><li><a href="FaqPage.html">FaqPage</a></li><li><a href="ForgotPassword.html">ForgotPassword</a></li><li><a href="Home.html">Home</a></li><li><a href="JobsAppliedTo.html">JobsAppliedTo</a></li><li><a href="JobSearchResults.html">JobSearchResults</a></li><li><a href="JobsSaved.html">JobsSaved</a></li><li><a href="Login.html">Login</a></li><li><a href="Messages.html">Messages</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="NewJobPosting.html">NewJobPosting</a></li><li><a href="Notifications.html">Notifications</a></li><li><a href="ProfileBusiness.html">ProfileBusiness</a></li><li><a href="ProfileStudent.html">ProfileStudent</a></li><li><a href="Register.html">Register</a></li><li><a href="Registration.html">Registration</a></li><li><a href="registrationAdminPage1.html">registrationAdminPage1</a></li><li><a href="RegistrationAdminPage2.html">RegistrationAdminPage2</a></li><li><a href="RegistrationAdminPage3.html">RegistrationAdminPage3</a></li><li><a href="ResetPassword.html">ResetPassword</a></li><li><a href="Review.html">Review</a></li><li><a href="ReviewReceived.html">ReviewReceived</a></li><li><a href="ReviewsGiven.html">ReviewsGiven</a></li><li><a href="ViewJobPosting.html">ViewJobPosting</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="PointerEvent.html">PointerEvent</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Child">Child</a></li><li><a href="global.html#connectDB">connectDB</a></li><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#persist">persist</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Feb 23 2022 10:20:20 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

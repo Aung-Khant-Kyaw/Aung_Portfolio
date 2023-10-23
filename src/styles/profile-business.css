@@ -1,0 +1,156 @@
+.profile-page-container-business {
+  border-radius: 10px;
+}
+
+.profile-container-business {
+  display: grid;
+  grid-template-columns: 3fr 4fr 0.8fr;
+  padding: 20px;
+}
+
+.column-left-business {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10%;
+  padding-top: 35px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.active-modal {
+  overflow: hidden;
+}
+
+.add-docs-btn-business {
+  border-radius: 7px;
+  border: 1px solid #26506c;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: ease-in-out 0.3s;
+}
+
+.add-docs-btn-business:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: white;
+}
+
+.add-docs-btn-icon-business {
+  padding: 5px 0;
+  margin-top: 7px;
+}
+
+.add-docs-btn-title-business {
+  padding: 5px 5px;
+  text-align: center;
+}
+
+.docs-small-wrapper-business {
+  display: flex;
+  justify-content: space-between;
+}
+
+.docs-small-wrapper-business>div {
+  font-size: 0.8em;
+}
+
+.document-info-business {
+  display: grid;
+  grid-template-columns: 6fr 3fr 1fr;
+  align-items: center;
+  padding: 10px;
+}
+
+.doc-icon-business {
+  text-align: center;
+  border: 1px solid rgb(255, 38, 0);
+  border-radius: 8px;
+  transition: ease-in-out 0.3s;
+
+}
+
+.doc-icon-business:hover {
+  cursor: pointer;
+  color: azure;
+  background-color: rgb(255, 38, 0);
+}
+
+.document-info-business {
+  border: 1px solid rgb(181, 181, 181, 0.7);
+  margin: 8px 0;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.doc-name-business {
+  font-size: 0.8em;
+}
+
+.file-name-business {
+  font-size: 0.7em;
+}
+
+.doc-type-business {
+  font-size: 0.75em;
+}
+
+.url-example {
+  font-size: 0.75em;
+  margin: -10px 5px -30px;
+}
+
+.bus-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bus-back-btn {
+  width: 120px;
+  border: 1px solid;
+  text-align: center;
+  border-radius: 10px;
+  transition: ease-in-out 0.3s;
+  font-weight: 600;
+}
+
+.bus-back-btn:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fff;
+}
+
+.bus-update-btn {
+  width: 170px;
+  border: 1px solid rgb(40, 179, 225);
+  text-align: center;
+  border-radius: 10px;
+  transition: ease-in-out 0.3s;
+  font-weight: 600;
+}
+
+.bus-update-btn:hover {
+  cursor: pointer;
+  background-color: rgb(40, 179, 225);
+  color: #fff;
+}
+
+.bus-update-btn.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bus-back-btn.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}

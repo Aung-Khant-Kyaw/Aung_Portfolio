@@ -1,0 +1,154 @@
+json = `{
+    "listings": [
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Google",
+            "role": "Technology Internship",
+            "role_desc": "Looking for developers that are experienced with Python."
+        } ,
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 2",
+            "role": "Role 2",
+            "role_desc": "You will be executing the duties of role 2"
+        } ,
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 3",
+            "role": "Role 3",
+            "role_desc": "You will be executing the duties of role 3"
+        } ,
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 4",
+            "role": "Role 4",
+            "role_desc": "You will be executing the duties of role 4"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        },
+        {
+            "icon_path": "/resources/img/company_sample.png",
+            "company": "Sample Company 5",
+            "role": "Role 5",
+            "role_desc": "You will be executing the duties of role 5"
+        }
+    ] 
+}`

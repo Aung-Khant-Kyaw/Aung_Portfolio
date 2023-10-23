@@ -1,0 +1,104 @@
+.app-modal-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  min-width: 450px;
+  max-width: 800px;
+  max-height: 80vh;
+  padding: 14px 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.app-modal-header {
+  margin: auto;
+}
+
+.app-modal-business-info {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.app-modal-business-info h2 {
+  margin: 5px;
+}
+
+.app-form {
+  display: grid;
+}
+
+.app-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+}
+
+.app-close-btn {
+  color: white;
+  background: #e0202c;
+}
+.app-save-btn {
+  color: white;
+  background: grey;
+}
+.app-submit-btn {
+  color: white;
+  /* background-color: lightsteelblue; */
+}
+
+.app-file-label {
+  font-size: smaller;
+}
+
+h4 {
+  margin: 0;
+}
+
+input[type='text'],
+input[type='number'],
+input[type='email'],
+input[type='tel'],
+input[type='password'],
+input[type='date'] {
+  padding: 10px 15px;
+  border-radius: 5px;
+  display: inline-block;
+  width: 92%;
+  margin-bottom: 0px;
+  font-size: 14px;
+  /* box-shadow: 0 0; */
+  border: revert;
+  border-width: 2px;
+  border-style: inset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+}
+
+select {
+  padding: 10px 15px;
+  border-radius: 5px;
+  display: inline-block;
+  width: 99%;
+  margin-bottom: 0px;
+  font-size: 14px;
+  border: revert;
+  border-width: 2px;
+  border-style: inset;
+}
+
+.sub-text-app {
+  font-size: 12px;
+  color: grey;
+  margin-block-start: 5px;
+  margin-block-end: 0px;
+}

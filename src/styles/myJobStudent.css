@@ -1,0 +1,45 @@
+.dash-container {
+  width: 95%;
+  height: 95%;
+  margin: 0 1%;
+}
+
+.job-board-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  height: fit-content;
+  min-height: 57vh;
+}
+
+.job-post-column {
+  display: flex;
+  width: 30vw;
+  min-width: 180px;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  background-color: rgb(236, 237, 238);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-radius: 7px;
+}
+
+h3 {
+  text-decoration: underline;
+  margin-block-start: 15px;
+  margin-block-end: 15px;
+  max-height: 100px;
+}
+
+.job-card-container {
+  display: flex;
+  align-self: stretch;
+  justify-content: center;
+}
+
+.card-container {
+  width: 88%;
+}

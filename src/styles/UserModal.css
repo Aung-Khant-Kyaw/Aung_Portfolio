@@ -1,0 +1,596 @@
+y.dash-container {
+    padding: 20px;
+  }
+
+  .dash-header {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .dash-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .close-button-right{
+    margin-right: 5px;
+  }
+  .job-post-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+
+  .job-post {
+    cursor: pointer;
+  }
+
+  .job-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f5f5f5;
+  }
+
+  .job-card h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .job-card p {
+    margin-bottom: 5px;
+  }
+
+
+  .job-modal {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .job-modal h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .job-modal p {
+    margin-bottom: 5px;
+  }
+
+  .job-modal .modal-close {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .job-modal .modal-close:hover {
+    text-decoration: underline;
+  }
+
+/* ---------------------------UserModal.css ---------------------------*/
+  .border{
+    border-width: 2px;
+    border-color: red;
+    border-style: solid;
+}
+
+/* Whole Page */
+.user-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+  }
+/* Whole Page for onClick event */
+  .user-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+/* main modal box */
+  .user-modal-wrapper {
+    min-height: 70vh;
+    height: 83%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 30%;
+    margin: 0 auto;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+    position: relative;
+  }
+
+  /* delete confirmation */
+  .delete-confirmation{
+    min-height: 10vh;
+    height: 10vh;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 20%;
+    margin: 0 auto;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+    position: relative;
+    text-align: center;
+    align-items: center;
+  }
+
+    /* delete confirmation */
+    .deny-confirmation{
+      min-height: 26vh;
+      height: 26vh;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      width: 20%;
+      margin: 0 auto;
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+      position: relative;
+      text-align: center;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    .approve-confirmation{
+      min-height: 12vh;
+      height: 12vh;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      width: 20%;
+      margin: 0 auto;
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+      position: relative;
+      text-align: center;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+  .denyComment{
+    margin-top:4px;
+    width:80%;
+  }
+
+  .delete-title{
+    font-size: 1.2vw;
+  }
+/* main-info box */
+.user-main-info{
+  padding: 1vh 1vw 0.5vw 1vw;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  max-height: 25%;
+  background-color: #ccc;
+  /* for sticky div, top is a must */
+  position: sticky;
+  top:0;
+  /* for positioning left and right divs */
+  display: flex;
+  flex-direction: column;
+  /* overflow: auto when too small */
+  overflow-x:hidden;
+  overflow-y: auto;
+}
+
+/* Job Title of the modal */
+.user-business-title{
+  font-size: 1.5vw;
+  font-weight: 700;
+}
+
+/* business name and location of the modal */
+.user-business-info{
+  font-size: 1.3vw;
+  padding-left: 1vw;
+}
+
+/* buttons side of the main-info */
+.user-right{
+  /* align the button to the right of the main-info div */
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+  padding-top: 5px;
+  font-size: 1vw;
+  align-items: center;
+  text-align: center;
+}
+
+/* next and previous button */
+.user-next-button,
+.user-previous-button{
+  cursor: pointer;
+}
+
+/* job close button */
+.user-job-close {
+  z-index: 1; /* Ensure it appears above the modal */
+  cursor: pointer;
+  position: fixed;
+  top: 65px; /* Adjust the top position as needed */
+  right: 20px; /* Adjust the right position as needed */
+}
+
+.apply-button{
+  margin-bottom: 3px;
+}
+
+.comment-button{
+  font-size: large;
+}
+
+.error-message{
+  margin:0;
+  font-size: small;
+  font-weight: 400;
+}
+
+.jobtitle {
+  margin: 0;
+}
+.jobtitle input[type="text"]{
+  width: 100%;
+  font-size: large;
+}
+
+.user-left {
+  display: flex;
+  flex-direction: row;
+}
+
+.apply-button:disabled{
+  background-color: dimgrey;
+  color: linen;
+  opacity: 1;
+}
+/* info div excluding the main-info in job-modal */
+.user-info-wrapper{
+  padding: 0 1vw;
+  overflow-y: scroll;
+  margin-top:0;
+  font-size: 1.2vw;
+  line-height: 1.5vw;
+  height: 73%;
+}
+
+.user-info-wrapper::-webkit-scrollbar {
+  display: block;
+  width: 5px;
+}
+.user-info-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.user-info-wrapper::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-right: none;
+  border-left: none;
+}
+
+.user-info-wrapper::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 10px;
+}
+
+.user-info-wrapper::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 10px;
+}
+
+.edit-job {
+  font-size: small;
+  font-weight: bold;
+  margin: 0; /* Remove margin */
+  margin-left: auto;
+
+}
+
+.user-left {
+   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.edit-job :hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+
+.user-modal-wrapper2 {
+  min-height: 70vh;
+  height: 70vh;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 50%;
+  margin: 0 auto;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+  position: relative;
+}
+
+.form-group {
+  margin-bottom: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: large;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+input {
+  gap: 10px;
+}
+button {
+  padding: 1px 5px;
+  background-color: #26506c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2vw;
+  cursor: pointer;
+  margin-left: 10px;
+  position: relative;
+}
+
+button:hover {
+  background-color: #1e455b;
+}
+
+
+.edit-mode .info-wrapper {
+  padding: 0 1vw;
+  height: 70%;
+  overflow-y: scroll;
+  margin-top:0;
+  font-size: 1.2vw;
+  line-height: 1.5vw;
+}
+
+.edit-mode .user-modal-wrapper {
+  min-height: 70vh;
+  height: 78vh;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 50%;
+  margin: 0 auto;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+  position: relative;
+}
+
+.edit-mode .otherInfoHeader {
+font-weight: bold;
+font-size: 1.3vw;
+}
+
+.edit-mode .otherInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.otherInfo {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 0p;
+}
+#jobState,
+#location {
+  margin: 0;
+}
+
+.edit-mode .editBusInfo {
+  font-size: 1.1vw;
+}
+
+.editing-mode .busAdmin {
+  font-size: 1vw;
+}
+
+.save-button-container {
+  margin-top: 5px;
+}
+
+
+/* =================== Comment Section of the Public Profile ================== */
+.comment-modal-container{
+  min-height: 50vh;
+  height: 50vh;
+  width: 60%;
+  border-radius: 10px;
+  box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+  background-color: #fff;
+  margin: 25px auto 0 auto;
+  border: 1px solid #ccc;
+  position: relative; 
+  overflow-y:scroll;
+}
+.comment-button{
+  font-size: 1rem;
+}
+.comment-dropdown{
+  display: inline-block;
+  position: relative;
+}
+.dropdown-options{
+  display:none;
+  position: absolute;
+}
+.comment-drop-button{
+  height: fit-content;
+  font-size: 0.8em;
+  background: #448cbc;
+}
+.comment-drop-button:hover{
+  height: fit-content;
+  font-size: 0.8em;
+  background: #448cbc;
+}
+.comment-dropdown:hover .dropdown-options{
+  display: block;
+}
+.comment-title{
+  font-size: 1em;
+}
+.comment-title-h1{
+  font-size: 1.3em;
+}
+.comment-topbar{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding: 10px 30px 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.close-button{
+  margin-left: 5px;
+}
+
+.comment-card-wrapper{
+  border-radius: 10px;
+  padding: 2px;
+  margin: 10px 15px 10px 15px;
+  box-shadow: 0 0 3px rgba(34, 34, 34, 0.8);
+  border: 1px solid #ccc;
+  height: fit-content;
+  overflow-y: auto;
+}
+.comment-top-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment-item{
+  flex-grow: 1;
+  flex-basis: 20px;
+}
+.button-div{
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+.comment-button{
+  border-radius: 5px;
+  border: 1px solid #26506c;
+  margin: 0 5px;
+  color: white;
+  padding: 5px 12px;
+  font-size: 0.8em;
+  width: fit-content;
+  background: #26506c;
+}
+.comment-button:hover{
+  transition: 500ms;
+  cursor: pointer;
+  background: white;
+  color: #26506c;
+}
+.comment-review{
+  height: 7vh;
+  max-height: 7vh;
+  font-size: 0.8em;
+}
+
+.search-btn-container{
+  
+}
+/* =================== Public Comment of the Public Profile ================== */
+.public-comment-container{
+  all: revert;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 10px;
+  box-shadow: 0 0 13px rgba(34, 34, 34, 0.8);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.upload-box{
+  padding: 5px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  color: red; 
+}
+
+.upload-text{
+  font-size: 1.3rem;
+  padding: 5px 0px;
+}
+
+.upload-center{
+  align-items: center;
+}
+
+.upload-width{
+  width: fit-content;
+}
+
+.upload-margin{
+  margin: 5px 0px; 
+}
+.rating-input-DIV{
+  width: 15%;
+}
+
+.rating-input{
+  margin-bottom: 10px;
+}
+
+.reviewComment{
+  margin-bottom: 10px;
+}
+  /* Your custom styles for editing mode here */

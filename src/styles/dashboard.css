@@ -1,0 +1,141 @@
+/* ################ SIDE BAR STYLES ################ */
+.dashboard-container {
+  overflow: hidden;
+}
+
+.dash-wrapper {
+  min-height: 89vh;
+  background-color: #f0f4f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dash-content {
+  background-color: #fafafa;
+  display: flex;
+  min-height: 70vh;
+  height: 70vh;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.dash-options {
+  background-color: rgb(227, 226, 226);
+  border-radius: 10px 0 0 10px;
+  flex-direction: column;
+  border-right: 2px dashed gray;
+}
+
+.dash-option-content {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  text-transform: uppercase;
+  font-weight: 600;
+  width: 150px;
+  color: #2c423f;
+  height: 100%;
+}
+
+.dash-std-option-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
+  text-transform: uppercase;
+  font-weight: 600;
+  width: 150px;
+  color: #2c423f;
+  height: 100%;
+}
+
+.dash-component {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 0.9em;
+  border-bottom: 0.8px solid gray;
+  transition: ease-in-out 0.3s;
+}
+
+.dash-component:last-child {
+  border-bottom: none;
+}
+
+.dash-component:first-child:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fafafa;
+  border-radius: 10px 0 0 0;
+}
+.dash-component:last-child:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fafafa;
+  border-radius: 0 0 0 10px;
+}
+
+.dash-component:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fafafa;
+}
+
+.dash-std-component {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 0.9em;
+  border-bottom: 0.8px solid gray;
+  transition: ease-in-out 0.3s;
+  height: 100%;
+}
+
+.dash-std-component:last-child {
+  border-bottom: none;
+}
+
+.dash-std-component:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fafafa;
+}
+
+.dash-std-component:first-child:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fafafa;
+  border-radius: 10px 0 0 0;
+}
+.dash-std-component:last-child:hover {
+  cursor: pointer;
+  background-color: #26506c;
+  color: #fafafa;
+  border-radius: 0 0 0 10px;
+}
+
+.dash-component-selected:first-child {
+  border-radius: 10px 0px 0px 0px;
+  background-color: white;
+}
+.dash-component-selected:last-child {
+  border-radius: 0px 0px 0px 10px;
+  background-color: white;
+}
+
+.dash-component-selected {
+  background-color: white;
+}
+
+.dash-component-selected:hover {
+  color: #2c423f;
+}
+
+/* ################ MAIN COMPONENT STYLES ################ */
+.dash-main-component {
+  width: 100%;
+  border-radius: 0 10px 10px 0;
+  overflow: auto;
+}
